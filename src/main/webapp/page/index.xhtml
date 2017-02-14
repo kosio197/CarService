@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+    <ui:composition template="template/layout.xhtml">
+     <ui:define name="content">
+        <h:form>
+           <h1 align="center">Something Text With Title</h1>
+           
+           <img src="../images/manta_ilustr.jpg" style="max-height:480px;max-width:700px" align="right"/>
+           
+                <h:panelGrid id="user-registration-grid" columns="2" cellpadding="5">
+                    <f:facet name="header">
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" />
+                    </f:facet>
+     
+                    <h:outputText for="username" class="bold-label" value="username: *" />
+                    <p:inputText id="username" value="#{userBean.user.username}" required="true" requiredMessage="Username is required." />
+                    
+                    <h:outputLabel class="bold-label" for="pwd1" value="password: *" />
+                    <p:password id="pwd1" value="#{userBean.user.password}" label="password: *" required="true" requiredMessage="Password1 is required." validatorMessage="Passwords doesn't match!"/>
+
+
+                    <h:outputText value="Role: *" />
+                    <p:inputText value="#{userBean.user.role}" required="true" label="roleeeeeee" />
+
+                    <h:outputText value="firstName: *" />
+                    <p:inputText value="#{userBean.user.firstName}" required="true" label="Firstname" />
+
+                    <h:outputText value="lastName: *" />
+                    <p:inputText value="#{userBean.user.lastName}" required="true" label="Lastname" />
+                    
+                    <h:outputText value="Email: *" />
+                    <p:inputText value="#{userBean.user.email}" required="true" label="Email" />
+                    
+                    <h:outputText value="Telephone: *" />
+                    <p:inputText value="#{userBean.user.telephone}" required="true" label="Phone" />
+                    
+                    <h:outputText value="deys to event: *" />
+                    <p:inputText value="#{userBean.user.daysToEvent}" required="true" label="Days to event" />
+                       
+                    <p:outputLabel value="Last Visite: *"  />
+                    <p:calendar  value="#{userBean.user.lastVisit}" navigator="true" pattern="yyyy-MM-dd" />
+                        
+                </h:panelGrid>
+
+            <br />
+          <p:commandButton id="btnAll" process="@all" update="user-registration-grid" action="#{userBean.save}" value="Submit" icon="ui-icon-check" />
+
+        </h:form>
+     </ui:define>
+    </ui:composition>
+</h:body>
+</html>
