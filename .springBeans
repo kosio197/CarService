@@ -10,6 +10,8 @@
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/applicationContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring-security.xml</config>
+		<config>src/main/webapp/WEB-INF/faces-config.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

@@ -26,7 +26,25 @@ public class UserRepositoryImpl {
         return userEntityToModel(userEntity);
     }
 
+    public UserModel getUserByEmail(String email) {
+        UserEntity userEntity = userRepository.findOneByEmail(email);
+        return userEntityToModel(userEntity);
+    }
+
+    public List<UserModel> getAllUsers() {
+        List<UserModel> models = new ArrayList<>();
+        Iterable<UserEntity> entities = userRepository.findAll();
+        for (UserEntity userEntity : entities) {
+            models.add(userEntityToModel(userEntity));
+        }
+        return models;
+    }
+
     private UserModel userEntityToModel(UserEntity userEntity) {
+        if (userEntity == null) {
+            return null;
+        }
+
         UserModel model = new UserModel(userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(),
                 userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(), userEntity.getLastVisite(),
                 userEntity.getTelephone(), userEntity.getDaysToEvent());
@@ -38,15 +56,6 @@ public class UserRepositoryImpl {
                 model.getFirstName(), model.getLastName(), model.getEmail(), model.getLastVisit(), model.getTelephone(),
                 model.getDaysToEvent());
         return entity;
-    }
-
-    public List<UserModel> getAllUsers() {
-        List<UserModel> models = new ArrayList<>();
-        Iterable<UserEntity> entities = userRepository.findAll();
-        for (UserEntity userEntity : entities) {
-            models.add(userEntityToModel(userEntity));
-        }
-        return models;
     }
 
 }

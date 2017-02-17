@@ -1,21 +1,19 @@
 package bg.garage.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-
-import org.primefaces.event.FlowEvent;
+import javax.servlet.ServletException;
 
 import bg.garage.model.UserModel;
+import bg.garage.security_service.UserAutenticationService;
 import bg.garage.servicesImpl.UserServiceImpl;
 
-@ManagedBean(name = "userWizard")
+@ManagedBean(name = "userBean")
 @SessionScoped
 public class UserBean implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,29 +21,53 @@ public class UserBean implements Serializable {
     @ManagedProperty("#{userServiceImpl}")
     private UserServiceImpl userService;
 
+    @ManagedProperty("#{userAutenticationService}")
+    private UserAutenticationService userAutenticationService;
+
     @ManagedProperty("#{userModel}")
     private UserModel user;
 
     private boolean skip;
+    private String username = "";
+    private String password = "";
+    private boolean notAutenticated;
 
-    public void save() {
-        userService.addUser(user);
-        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + user.getFirstName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public String onFlowProcess(FlowEvent event) {
-        if (skip) {
-            skip = false; // reset in case user goes back
-            return "confirm";
-        } else {
-            return event.getNewStep();
-        }
+    public boolean hasAutenticated() {
+        return notAutenticated;
     }
 
     public boolean hasRoleAdmin() {
-
         return user.getRole().equals("ADMIN");
+    }
+
+    public void userRegistryPageSendRedirect() throws ServletException, IOException {
+        sendRedirect("/CarService/page/userRegistry.html");
+    }
+
+    public void login() throws ServletException, IOException {
+        UserModel targetUser = this.userAutenticationService.autenticateUser(username, password);
+
+        if (targetUser != null) {
+            this.user = targetUser;
+            notAutenticated = false;
+            sendRedirect("/CarService/page/index.html");
+        } else {
+            notAutenticated = true;
+        }
+    }
+
+    private void sendRedirect(String path) throws ServletException, IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(path);
+        //
+        // ExternalContext context =
+        // FacesContext.getCurrentInstance().getExternalContext();
+        // HttpServletRequest request = ((HttpServletRequest)
+        // context.getRequest());
+        // ServletResponse resposnse = ((ServletResponse)
+        // context.getResponse());
+        // RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+        // dispatcher.forward(request, resposnse);
+        // FacesContext.getCurrentInstance().responseComplete();
     }
 
     public UserModel getUser() {
@@ -72,12 +94,27 @@ public class UserBean implements Serializable {
         this.userService = userService;
     }
 
-    HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
-            .getRequest();
+    public String getUsername() {
+        return username;
+    }
 
-    @PostConstruct
-    public HttpServletRequest getHttpServletRequest() {
-        httpServletRequest.getSession().setAttribute("name", "null");
-        return httpServletRequest;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserAutenticationService getUserAutenticationService() {
+        return userAutenticationService;
+    }
+
+    public void setUserAutenticationService(UserAutenticationService userAutenticationService) {
+        this.userAutenticationService = userAutenticationService;
     }
 }

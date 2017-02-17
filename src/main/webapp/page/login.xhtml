@@ -10,25 +10,33 @@
 <h:body>
 	<ui:composition template="template/layout.xhtml">
 		<ui:define name="header">
-		  <div align="center">			
-			<h:form id="loginForm">
-				<h:panelGrid columns="3" cellpadding="1" border="3">
-					<h:panelGrid columns="2" >
-						<h:outputText value="username" />
-						<p:inputText id="j_username" required="true" value="#{userLoginBean.username}" />
 
-						<h:outputText value="password" />
-						<p:password id="j_password" required="true" value="#{userLoginBean.password}" />
+		  <div align="center">
+			<h:form id="loginForm">
+				<h:panelGrid columns="4" cellpadding="1" border="3" >
+		     <c:choose>
+              <c:when test="#{userBean.hasAutenticated()}">
+                      <div style="color: red; font-size: 20; background-position: center;">Грешно потребителско име или парола</div>
+              </c:when>
+             </c:choose> 
+					<h:panelGrid columns="2" >
+						<h:outputText value="потребителско име" />
+						<p:inputText  value="#{userBean.username}" />
+
+						<h:outputText value="парола"/>
+						<p:password   value="#{userBean.password}" />
 					</h:panelGrid>
-					<p:commandButton id="saveButton"
-					               action="#{userLoginBean.login}" value="Вход" update="@form" ajax="false"/>
-		            
-					<p:commandButton value="Регистрация" icon="ui-icon-extlink" ajax="false"
-					               action="/page/userRegister.xhtml?faces-redirect=true" />
-					              
+					<p:commandButton id="saveButton" icon="ui-icon-extlink"
+					               action="#{userBean.login()}" value="Вход" update="@form" ajax="false"/>
+
+                    <p:commandButton value="Регистрация" icon="ui-icon-extlink" ajax="false"
+                                   action="#{userBean.userRegistryPageSendRedirect()}" />
+
+				
 				</h:panelGrid>
 			</h:form>
-		   </div>	
+
+		   </div>
 		</ui:define>
 	</ui:composition>
 </h:body>

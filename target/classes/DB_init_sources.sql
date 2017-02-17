@@ -21,7 +21,6 @@ id INT AUTO_INCREMENT PRIMARY KEY,
 article VARCHAR(255),
 mark VARCHAR(255),
 cat_number varchar(255),
-description TEXT,
 pieces INT,
 price DOUBLE
 );
@@ -67,7 +66,7 @@ CREATE TABLE cars
 (
 id INT AUTO_INCREMENT PRIMARY KEY,
 pictures_id INT,
-registration_plate VARCHAR(12),
+registration_plate VARCHAR(12)  UNIQUE,
 marka VARCHAR(30),
 model VARCHAR(30),
 year_manufacture DATE,
@@ -89,7 +88,6 @@ antifreeze_id INT,
 refrigerant_id INT,
 
 timing_belt_id INT,
-accessory_belt_id INT,
 
 CONSTRAINT fk_engine_oil_id_car_fluids FOREIGN KEY (engine_oil_id) REFERENCES car_fluids (id),
 CONSTRAINT fk_transmision_oil_id_car_fluids FOREIGN KEY (transmision_oil_id) REFERENCES car_fluids (id),
@@ -99,8 +97,13 @@ CONSTRAINT fk_break_fluid_id_car_fluids FOREIGN KEY (break_fluid_id) REFERENCES 
 CONSTRAINT fk_antifreeze_id_car_fluids FOREIGN KEY (antifreeze_id) REFERENCES car_fluids (id),
 CONSTRAINT fk_refrigerant_id_car_fluids FOREIGN KEY (refrigerant_id) REFERENCES car_fluids (id),
 
-CONSTRAINT fk_timing_belt_id_car_belts FOREIGN KEY (timing_belt_id) REFERENCES car_belts (id),
-CONSTRAINT fk_accessory_belt_id_car_belts FOREIGN KEY (accessory_belt_id) REFERENCES car_belts (id)
+CONSTRAINT fk_timing_belt_id_car_belts FOREIGN KEY (timing_belt_id) REFERENCES car_belts (id)
+);
+
+CREATE TABLE cars_car_belts
+(
+car_id INT,
+car_belts_id INT
 );
 
 CREATE TABLE cars_repairs
@@ -112,21 +115,21 @@ repair_id INT
 CREATE TABLE users
 (
 id INT AUTO_INCREMENT PRIMARY KEY,
-username VARCHAR(50) NOT NULL,
+username VARCHAR(50) NOT NULL UNIQUE,
 password VARCHAR(50) NOT NULL,
-roles ENUM ('USER', 'SUPER_USER', 'ADMIN') DEFAULT 'USER',
+role ENUM ('USER', 'SUPER_USER', 'ADMIN') DEFAULT 'USER',
 first_name VARCHAR(20),
 last_name VARCHAR(20),
-email VARCHAR(50),
+email VARCHAR(50) UNIQUE,
 last_visit_date DATE,
 telephone VARCHAR(30),
 days_to_event INT DEFAULT 10
 );
 
-INSERT INTO users VALUES (1, 'kosio', 'k0510', 'ADMIN', 'Konstantin', 'Petrov', 'kosio197@abv.bg', NULL, '0895 60 66 20', 10);
+INSERT INTO users VALUES (1, 'kosio', 'cz', 'ADMIN', 'Konstantin', 'Petrov', 'kosio197@abv.bg', NULL, '0895 60 66 20', 10);
 
 CREATE TABLE users_cars
 (
 user_id INT,
-car=_id INT
+car_id INT
 );
