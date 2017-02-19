@@ -22,6 +22,7 @@ public class CarEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    private Long ownerId;// TODO change logic and remove MANY TO MANY with users
     private PictureEntity pictures;
     private String registrationPlate;
     private String marka;
@@ -54,13 +55,15 @@ public class CarEntity implements Serializable {
         this.repairs = new HashSet<>();
     }
 
-    public CarEntity(String registrationPlate, String marka, String model, Date yearManifacture, String engineType,
-            Integer currentMilage, Date roadTaxisEndDate, Date anualCheckEndDate, Date liabilityInsuranseEndDate,
-            Date fullInsuranseEndDate, Date vinnetesEndDate, CarFluidEntity engineOil, CarFluidEntity transmisionOil,
-            CarFluidEntity differentialOil, CarFluidEntity hidraulicOil, CarFluidEntity breakFluid,
-            CarFluidEntity antifreeze, CarFluidEntity refrigerant, CarBeltEntity timingBelt,
-            Set<CarBeltEntity> accessoaryBelt) {
-
+    public CarEntity(Long userId, PictureEntity pictures, String registrationPlate, String marka, String model,
+            Date yearManifacture, String engineType, Integer currentMilage, Date roadTaxisEndDate,
+            Date anualCheckEndDate, Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate,
+            CarFluidEntity engineOil, CarFluidEntity transmisionOil, CarFluidEntity differentialOil,
+            CarFluidEntity hidraulicOil, CarFluidEntity breakFluid, CarFluidEntity antifreeze,
+            CarFluidEntity refrigerant, CarBeltEntity timingBelt) {
+        super();
+        this.ownerId = userId;
+        this.pictures = pictures;
         this.registrationPlate = registrationPlate;
         this.marka = marka;
         this.model = model;
@@ -80,11 +83,6 @@ public class CarEntity implements Serializable {
         this.antifreeze = antifreeze;
         this.refrigerant = refrigerant;
         this.timingBelt = timingBelt;
-        this.accessoaryBelt = accessoaryBelt;
-    }
-
-    public void addRepair(CarRepairEntity carRepairEntity) {
-        this.repairs.add(carRepairEntity);
     }
 
     @Id
@@ -95,6 +93,15 @@ public class CarEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "owner_id")
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

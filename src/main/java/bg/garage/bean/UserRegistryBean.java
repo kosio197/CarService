@@ -2,7 +2,6 @@ package bg.garage.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,11 +27,9 @@ public class UserRegistryBean implements Serializable {
 
     private String username;
     private String password;
-    private String role = "USER";
     private String firstName;
     private String lastName;
     private String email;
-    private Date lastVisit = new Date();
     private String telephone;
     private Integer daysToEvent;
 
@@ -53,25 +50,13 @@ public class UserRegistryBean implements Serializable {
     }
 
     private void addNewUser() throws ServletException, IOException {
-        UserModel user = new UserModel(username, password, role, firstName, lastName, email, lastVisit, telephone,
-                daysToEvent);
+        UserModel user = new UserModel(username, password, firstName, lastName, email, telephone, daysToEvent);
         userService.addUser(user);
         sendRedirect("/CarService/page/login.html");
     }
 
     private void sendRedirect(String path) throws ServletException, IOException {
-
         FacesContext.getCurrentInstance().getExternalContext().redirect(path);
-        //
-        // ExternalContext context =
-        // FacesContext.getCurrentInstance().getExternalContext();
-        // HttpServletRequest request = ((HttpServletRequest)
-        // context.getRequest());
-        // ServletResponse resposnse = ((ServletResponse)
-        // context.getResponse());
-        // RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-        // dispatcher.forward(request, resposnse);
-        // FacesContext.getCurrentInstance().responseComplete();
     }
 
     public UserServiceImpl getUserService() {
@@ -106,14 +91,6 @@ public class UserRegistryBean implements Serializable {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -136,14 +113,6 @@ public class UserRegistryBean implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Date getLastVisit() {
-        return lastVisit;
-    }
-
-    public void setLastVisit(Date lastVisit) {
-        this.lastVisit = lastVisit;
     }
 
     public String getTelephone() {

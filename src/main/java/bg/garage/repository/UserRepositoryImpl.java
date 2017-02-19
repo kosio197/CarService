@@ -2,11 +2,13 @@ package bg.garage.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import bg.garage.entity.UserEntity;
+import bg.garage.model.CarModel;
 import bg.garage.model.UserModel;
 
 @Component
@@ -14,6 +16,9 @@ public class UserRepositoryImpl {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CarRepositoryImpl carRepositoryImpl;
 
     public void addUser(UserModel userModel) {
         UserEntity userEntity = userModelToEntity(userModel);
@@ -45,9 +50,10 @@ public class UserRepositoryImpl {
             return null;
         }
 
-        UserModel model = new UserModel(userEntity.getUsername(), userEntity.getPassword(), userEntity.getRole(),
-                userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(), userEntity.getLastVisite(),
-                userEntity.getTelephone(), userEntity.getDaysToEvent());
+        Set<CarModel> cars = carRepositoryImpl.getUserCars(userEntity.getId());
+        UserModel model = new UserModel(userEntity.getId(), userEntity.getUsername(), userEntity.getPassword(),
+                userEntity.getRole(), userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(),
+                userEntity.getLastVisite(), userEntity.getTelephone(), userEntity.getDaysToEvent(), cars);
         return model;
     }
 

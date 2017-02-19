@@ -1,20 +1,14 @@
 package bg.garage.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserModel implements Serializable, UserDetails {
+public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -24,56 +18,41 @@ public class UserModel implements Serializable, UserDetails {
     private String firstName;
     private String lastName;
     private String email;
-    private Date lastVisit;
+    private Date lastVisit = new Date();
     private String telephone;
     private Integer daysToEvent;
     private Set<CarModel> userCars;
 
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
-    private boolean enabled;
-    private Collection<GrantedAuthority> authorities;
-
     public UserModel() {
-
-        this.enabled = true;
-        this.setAccountNonExpired(true);
-        this.setCredentialsNonExpired(true);
-        this.accountNonLocked = true;
         this.userCars = new HashSet<>();
     }
 
-    public UserModel(String username, String password, Collection<GrantedAuthority> role) {
-
-        this();
-        this.authorities = role;
-        this.username = username;
-        this.password = password;
-    }
-
-    public UserModel(String username, String password, String role, String firstName, String lastName, String email,
-            Date lastVisit, String telephone, Integer daysToEvent) {
+    public UserModel(String username, String password, String firstName, String lastName, String email,
+            String telephone, Integer daysToEvent) {
         this();
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.telephone = telephone;
+        this.daysToEvent = daysToEvent;
+    }
+
+    public UserModel(Long id, String username, String password, String role, String firstName, String lastName,
+            String email, Date lastVisit, String telephone, Integer daysToEvent, Set<CarModel> userCars) {
+        super();
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.lastVisit = lastVisit;
         this.telephone = telephone;
         this.daysToEvent = daysToEvent;
-
-        if (role != null && (role.equals("ADMIN") || role.equals("USER"))) {
-            this.role = role;
-        }
-
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
-
-        this.authorities = authorities;
-        this.username = username;
-        this.password = password;
+        this.userCars = userCars;
     }
 
     public void addCar(CarModel carModel) {
@@ -88,7 +67,6 @@ public class UserModel implements Serializable, UserDetails {
         this.id = id;
     }
 
-    @Override
     public String getUsername() {
         return username;
     }
@@ -97,7 +75,6 @@ public class UserModel implements Serializable, UserDetails {
         this.username = username;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
@@ -171,48 +148,13 @@ public class UserModel implements Serializable, UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setAuthorities(Collection<GrantedAuthority> authorities) {
-        this.authorities = authorities;
+    public boolean equals(Object obj) {
+        if (obj instanceof UserModel) {
+            if (((UserModel) obj).getId() == this.id) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

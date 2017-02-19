@@ -2,19 +2,12 @@ package bg.garage.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Entity(name = "users")
 public class UserEntity implements Serializable {
@@ -30,14 +23,14 @@ public class UserEntity implements Serializable {
     private Date lastVisit;
     private String telephone;
     private Integer daysToEvent;
-    private Set<CarEntity> userCars;
 
     public UserEntity() {
-        this.userCars = new HashSet<>();
+
     }
 
     public UserEntity(String username, String password, String role, String firstName, String lastName, String email,
             Date lastVisite, String telephone, Integer daysToEvent) {
+        this();
         this.username = username;
         this.password = password;
         this.role = role;
@@ -47,10 +40,6 @@ public class UserEntity implements Serializable {
         this.lastVisit = lastVisite;
         this.telephone = telephone;
         this.daysToEvent = daysToEvent;
-    }
-
-    public void addCar(CarEntity carEntity) {
-        userCars.add(carEntity);
     }
 
     @Id
@@ -142,15 +131,5 @@ public class UserEntity implements Serializable {
 
     public void setDaysToEvent(Integer daysToEvent) {
         this.daysToEvent = daysToEvent;
-    }
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_cars", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"))
-    public Set<CarEntity> getUserCars() {
-        return userCars;
-    }
-
-    public void setUserCars(Set<CarEntity> userCars) {
-        this.userCars = userCars;
     }
 }

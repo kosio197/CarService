@@ -28,8 +28,8 @@ public class UserBean implements Serializable {
     private UserModel user;
 
     private boolean skip;
-    private String username = "";
-    private String password = "";
+    private String username;
+    private String password;
     private boolean notAutenticated;
 
     public boolean hasAutenticated() {
@@ -44,13 +44,18 @@ public class UserBean implements Serializable {
         sendRedirect("/CarService/page/userRegistry.html");
     }
 
+    public void logout() throws ServletException, IOException {
+        this.user = null;
+        sendRedirect("/CarService/page/login.html");
+    }
+
     public void login() throws ServletException, IOException {
         UserModel targetUser = this.userAutenticationService.autenticateUser(username, password);
 
         if (targetUser != null) {
             this.user = targetUser;
             notAutenticated = false;
-            sendRedirect("/CarService/page/index.html");
+            sendRedirect("/CarService/page/currentUserView.html");
         } else {
             notAutenticated = true;
         }
@@ -58,16 +63,6 @@ public class UserBean implements Serializable {
 
     private void sendRedirect(String path) throws ServletException, IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect(path);
-        //
-        // ExternalContext context =
-        // FacesContext.getCurrentInstance().getExternalContext();
-        // HttpServletRequest request = ((HttpServletRequest)
-        // context.getRequest());
-        // ServletResponse resposnse = ((ServletResponse)
-        // context.getResponse());
-        // RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-        // dispatcher.forward(request, resposnse);
-        // FacesContext.getCurrentInstance().responseComplete();
     }
 
     public UserModel getUser() {
