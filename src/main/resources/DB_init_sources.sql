@@ -23,111 +23,40 @@ telephone VARCHAR(30),
 days_to_event INT DEFAULT 10
 );
 
-INSERT INTO users VALUES (1, 'kosio', 'cz', 'ADMIN', 'Konstantin', 'Petrov', 'kosio197@abv.bg', NULL, '0895 60 66 20', 10);
-
-CREATE TABLE pictures
-(
-id INT AUTO_INCREMENT PRIMARY KEY,
-picture LONGBLOB
-);
-
-CREATE TABLE parts
-(
-id INT AUTO_INCREMENT PRIMARY KEY,
-article VARCHAR(255),
-mark VARCHAR(255),
-cat_number varchar(255),
-pieces INT,
-price DOUBLE
-);
-
-CREATE TABLE repairs
-(
-id INT AUTO_INCREMENT PRIMARY KEY,
-repair_date DATE,
-milage INT,
-description TEXT,
-recomendet_upcoming_repairs TEXT
-); 
-
-CREATE TABLE repairs_parts
-(
-repair_id INT,
-part_id INT
-);
-
-CREATE TABLE repairs_pictures
-(
-repair_id INT,
-picture_id INT
-);
-
-CREATE TABLE car_fluids
-(
-id INT AUTO_INCREMENT PRIMARY KEY,
-change_date DATE,
-milage INT,
-fluid_type VARCHAR(100)
-);
-
-CREATE TABLE car_belts
-(
-id INT AUTO_INCREMENT PRIMARY KEY,
-change_date DATE,
-milage INT,
-belt_type VARCHAR(100)
-);
+INSERT INTO users VALUES (1, 'kosio', 'cz', 'ADMIN', 'Konstantin', 'Petrov', 'kosio197@abv.bg', 20170221, '0895 60 66 20', 10);
 
 CREATE TABLE cars
 (
 id INT AUTO_INCREMENT PRIMARY KEY,
 owner_id INT,
-pictures_id INT,
 registration_plate VARCHAR(12)  UNIQUE,
 marka VARCHAR(30),
 model VARCHAR(30),
 year_manufacture DATE,
+vin VARCHAR(20),
 engine_type VARCHAR(100),
 current_milage INT,
-
+last_visit_date DATE,
 road_taxis_end_date DATE,
 annual_check_end_date DATE,
 liability_insurances_end_date DATE,
 full_insurances_end_date DATE,
 vinettes__end_date DATE,
 
-engine_oil_id INT,
-transmision_oil_id INT,
-differential_oil_id INT,
-hidravlic_oil_id INT,
-break_fluid_id INT,
-antifreeze_id INT,
-refrigerant_id INT,
-
-timing_belt_id INT,
-
-CONSTRAINT fk_owner_id_users FOREIGN KEY (owner_id) REFERENCES users (id),
-
-CONSTRAINT fk_engine_oil_id_car_fluids FOREIGN KEY (engine_oil_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_transmision_oil_id_car_fluids FOREIGN KEY (transmision_oil_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_differential_oil_id_car_fluids FOREIGN KEY (differential_oil_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_hidravlic_oil_id_car_fluids FOREIGN KEY (hidravlic_oil_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_break_fluid_id_car_fluids FOREIGN KEY (break_fluid_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_antifreeze_id_car_fluids FOREIGN KEY (antifreeze_id) REFERENCES car_fluids (id),
-CONSTRAINT fk_refrigerant_id_car_fluids FOREIGN KEY (refrigerant_id) REFERENCES car_fluids (id),
-
-CONSTRAINT fk_timing_belt_id_car_belts FOREIGN KEY (timing_belt_id) REFERENCES car_belts (id)
+CONSTRAINT fk_owner_users FOREIGN KEY (owner_id) REFERENCES users (id)
 );
 
-CREATE TABLE cars_car_belts
+INSERT INTO cars VALUES (1, 1, 'C 9918 HA', 'OPEL', 'ASTRA', 20050605, 'WOL######7890987',
+ '17 CDTI', 158422, 20170221,NULL,NULL,NULL,NULL,NULL);
+
+CREATE TABLE repairs
 (
+id INT AUTO_INCREMENT PRIMARY KEY,
 car_id INT,
-car_belts_id INT
-);
+repair_date DATE,
+milage INT,
+description TEXT,
+recomendet_upcoming_repairs TEXT,
 
-CREATE TABLE cars_repairs
-(
-car_id INT,
-repair_id INT
-);
-
+CONSTRAINT fk_repair_car FOREIGN KEY (car_id) REFERENCES cars (id)
+); 
