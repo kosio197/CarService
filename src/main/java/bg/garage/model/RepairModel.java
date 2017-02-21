@@ -2,45 +2,53 @@ package bg.garage.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-@Component
-public class CarRepairModel implements Serializable {
+@Component("repairModel")
+public class RepairModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    private Long carId;
     private Date repairDate;
     private Integer currentMilage;
     private String description;
     private String recomendetUpcomingRepair;
 
-    private Set<PictureModel> repairPictures;
-    private Set<PartModel> parts;
-
-    public CarRepairModel() {
+    public RepairModel() {
 
     }
 
-    public CarRepairModel(Date repairDate, Integer currentMilage, String description, String recomendetUpcomingRepair) {
-        super();
+    public RepairModel(Long carId, Date repairDate, Integer currentMilage, String description,
+            String recomendetUpcomingRepair) {
+        this();
+        this.carId = carId;
         this.repairDate = repairDate;
         this.currentMilage = currentMilage;
         this.description = description;
         this.recomendetUpcomingRepair = recomendetUpcomingRepair;
     }
 
-    public CarRepairModel(Long id, Date repairDate, Integer currentMilage, String description,
-            String recomendetUpcomingRepair, Set<PictureModel> repairPictures, Set<PartModel> parts) {
-        super();
+    public RepairModel(Long id, Long carId, Date repairDate, Integer currentMilage, String description,
+            String recomendetUpcomingRepair) {
+        this();
         this.id = id;
+        this.carId = carId;
         this.repairDate = repairDate;
         this.currentMilage = currentMilage;
         this.description = description;
         this.recomendetUpcomingRepair = recomendetUpcomingRepair;
-        this.repairPictures = repairPictures;
-        this.parts = parts;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof RepairModel) {
+            if (((RepairModel) obj).getId() == this.id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Long getId() {
@@ -49,6 +57,14 @@ public class CarRepairModel implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public Date getRepairDate() {
@@ -83,19 +99,4 @@ public class CarRepairModel implements Serializable {
         this.recomendetUpcomingRepair = recomendetUpcomingRepair;
     }
 
-    public Set<PictureModel> getRepairPictures() {
-        return repairPictures;
-    }
-
-    public void setRepairPictures(Set<PictureModel> repairPictures) {
-        this.repairPictures = repairPictures;
-    }
-
-    public Set<PartModel> getParts() {
-        return parts;
-    }
-
-    public void setParts(Set<PartModel> parts) {
-        this.parts = parts;
-    }
 }

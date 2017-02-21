@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletException;
 
 import bg.garage.model.UserModel;
 import bg.garage.security_service.UserAutenticationService;
@@ -39,7 +38,7 @@ public class UserRegistryBean implements Serializable {
         return !propertyErrorMesage.equals("");
     }
 
-    public void addUser() throws ServletException, IOException {
+    public void addUser() throws IOException {
         propertyErrorMesage = userAutenticationService.verificateUserProparty(username, email, password, firstName,
                 lastName, telephone, daysToEvent);
         if (propertyErrorMesage.equals("")) {
@@ -49,13 +48,13 @@ public class UserRegistryBean implements Serializable {
         }
     }
 
-    private void addNewUser() throws ServletException, IOException {
+    private void addNewUser() throws IOException {
         UserModel user = new UserModel(username, password, firstName, lastName, email, telephone, daysToEvent);
         userService.addUser(user);
         sendRedirect("/CarService/page/login.html");
     }
 
-    private void sendRedirect(String path) throws ServletException, IOException {
+    private void sendRedirect(String path) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect(path);
     }
 

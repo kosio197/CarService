@@ -1,17 +1,16 @@
 package bg.garage.repository;
 
-import java.util.Set;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import bg.garage.entity.CarEntity;
+import bg.garage.entity.RepairEntity;
 
 @Repository
-public interface CarRepository extends CrudRepository<CarEntity, Long> {
+public interface RepairRepository extends CrudRepository<RepairEntity, Long> {
 
-    @Query(value = "select c from cars as c where c.ownerId =:userId")
-    Set<CarEntity> findByOwnerId(@Param("userId") Long userId);
+    @Query(value = "SELECT r FROM repairs r WHERE r.carId =:carId")
+    Iterable<RepairEntity> findAllByCarId(@Param("carId") Long carId);
+
 }

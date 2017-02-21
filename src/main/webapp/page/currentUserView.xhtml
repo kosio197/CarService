@@ -14,78 +14,128 @@
 			<!--    -->
 			<h2 align="center">Hello #{userBean.user.firstName}
 				#{userBean.user.lastName}</h2>
-
+            
+          <!-- ********************************************************************************* -->
+			
 			<h:form>
-				<p:fieldset legend="Моят Профил" toggleable="true" toggleSpeed="500">
+			 <p:fieldset legend="Управление на Акаунта" toggleable="true" toggleSpeed="500">
+                <h3 >Полетата със звездичка са задължителни !</h3>
+                <h:panelGrid id="user-manage-property-grid" columns="5" cellpadding="2" border="1">
+	        <!-- USER ################################################################################# -->
+                  <h:form  action="#{userRegistryBean.addUser()}">
+                   <p:fieldset legend="Редактирай Профила">	                    
+	                    <h:panelGrid id="user-property-grid" columns="2" cellpadding="2" border="5">
+	                        <h:outputText value="username: *" />
+	                        <p:inputText value="#{userBean.username}" required="true" />
+	
+	                        <h:outputLabel value="password: *" />
+	                        <p:password value="#{userBean.password}" required="true" />
+	
+	                        <h:outputText value="firstName: *" />
+	                        <p:inputText value="#{userBean.user.firstName}" required="true" />
+	
+	                        <h:outputText value="lastName: *" />
+	                        <p:inputText value="#{userBean.user.lastName}" required="true" />
+	
+	                        <h:outputText value="Email: *" />
+	                        <p:inputText value="#{userBean.user.email}" required="true" />
+	
+	                        <h:outputText value="Telephone: *" />
+	                        <p:inputText value="#{userBean.user.telephone}" required="true" />
+	
+	                        <h:outputText value="deys to event: *" />
+	                        <p:inputNumber value="#{userBean.user.daysToEvent}" required="true" />
+	                    </h:panelGrid>
+	                    <br />
+	                    <p:commandButton  value="Промени Профила" action="#{userRegistryBean.addUser()}" 
+	                           id="btnAll" process="@all" icon="ui-icon-check" ajax="false" />
+	           </p:fieldset>
+	         </h:form>  
+	        <!-- /USER ################################################################################# -->
+            
+            <!-- CAR ################################################################################# -->   
+	              <h:form action="carRegistriBean.addCar(userBean.user.id)" >
+                   <p:fieldset legend="Добави Автомобил" > 
+                   
+                    <img src="../images/manta_gsi.png" style="max-height: 60px; max-width: 90px" align="middle"/>
+	                <h:panelGrid id="car-registri-grid" columns="4" cellpadding="2" border="5">
+	                   
+	                   <h:panelGrid id="car-property-grid" columns="2" cellpadding="2" border="1">  
+	
+		                    <h:outputText value="model: *" />
+	                        <p:inputText value="#{carRegistriBean.model}" required="true" />
 
-					<img src="../images/manta_ilustr.jpg"
-						style="max-height: 300px; max-width: 300px" align="right" />
-
-					<h:panelGrid id="user-registration-grid" columns="2"
-						cellpadding="0" border="3">
-
-						<h:outputText value="Потребителски " />
-						<h:outputText value=" _Профил" />
-						<p:separator />
-						<p:separator />
-
-						<h:outputText value="username: *" />
-						<p:inputText value="#{userBean.username}" required="true" />
-
-						<h:outputLabel value="password: *" />
-						<p:password value="#{userBean.password}" required="true" />
-
-						<h:outputText value="firstName: *" />
-						<p:inputText value="#{userBean.user.firstName}" required="true" />
-
-						<h:outputText value="lastName: *" />
-						<p:inputText value="#{userBean.user.lastName}" required="true" />
-
-						<h:outputText value="Email: *" />
-						<p:inputText value="#{userBean.user.email}" required="true" />
-
-						<h:outputText value="Telephone: *" />
-						<p:inputText value="#{userBean.user.telephone}" required="true" />
-
-						<h:outputText value="deys to event: *" />
-						<p:inputNumber value="#{userBean.user.daysToEvent}"
-							required="true" />
-
-					</h:panelGrid>
-
-					<br />
-					<p:commandButton id="btnAll" process="@all"
-						action="#{userRegistryBean.addUser()}" value="Промени Профила"
-						icon="ui-icon-check" ajax="false" />
-				</p:fieldset>
-			</h:form>
-			<form action="">
+	                        <h:outputText value="marka: *" />
+	                        <p:inputText value="#{carRegistriBean.marka}" required="true" />
+	
+	                        <h:outputText value="reg number: *" />
+	                        <p:inputText value="#{carRegistriBean.registrationPlate}" required="true" />
+	
+                            <h:outputLabel value="milage: *" />
+                            <p:inputNumber value="#{carRegistriBean.currentMilage}" required="true" />
+	
+	                        <h:outputText value="VIN: *" />
+	                        <p:inputText value="#{carRegistriBean.vin}" required="true" />
+	
+	                        <h:outputText value="engineType: *" />
+	                        <p:inputText value="#{carRegistriBean.engineType}" required="true" />
+	                   
+	                   </h:panelGrid>
+	                      <p:spacer width="10"/>
+	                   <h:panelGrid id="car-data-grid" columns="2" cellpadding="2" border="1">
+        
+                            <h:outputText value="yearManifacture: *" />
+                            <p:calendar value="#{carRegistriBean.yearManifacture}" navigator="true" pattern="yyyy-MMM-dd"/>
+                            
+                            <h:outputLabel value="roadTaxis: *" />
+                            <p:calendar value="#{carRegistriBean.roadTaxisEndDate}" navigator="true" pattern="yyyy-MMM-dd"  />
+    
+                            <h:outputText value="liability: *" />
+                            <p:calendar value="#{carRegistriBean.liabilityInsuranseEndDate}" navigator="true" pattern="yyyy-MMM-dd"  />
+    
+                            <h:outputText value="fullIns: *" />
+                            <p:calendar value="#{carRegistriBean.fullInsuranseEndDate}" navigator="true" pattern="yyyy-MMM-dd"  />
+    
+                            <h:outputText value="anualCheck: *" />
+                            <p:calendar value="#{carRegistriBean.anualCheckEndDate}" navigator="true" pattern="yyyy-MMM-dd" />
+                            
+                            <h:outputText value="vinnete: *" />
+                            <p:calendar  value="#{carRegistriBean.vinnetesEndDate}" navigator="true" pattern="yyyy-MMM-dd"  />
+	                   
+	                   </h:panelGrid>
+	                
+	                </h:panelGrid>
+	                   <br />                  
+                        <p:commandButton value="Добави Автомобил" action="#{carRegistriBean.addCar(userBean.user.id)}"
+                               id="btnAll" process="@all" icon="ui-icon-check" ajax="false" style="font-weight: bold"/> 
+	            </p:fieldset>
+               </h:form>
+	          <!-- /CAR ################################################################################# -->  
+                
+                </h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	<!-- ***************************************************************************************************** -->
+			
+			
+			<form >
 				<p:fieldset legend="Регистрирани Автомобили" toggleable="true" toggleSpeed="500">
-					<p:accordionPanel value="#{CompetitionsBean.pastCompetitions}"
-						var="competition" multiple="true">
-						<p:tab
-							title="#{competition.name} - #{competition.matchDate} - #{competition.discipline} - #{msgs['label.level']} #{competition.level} ">
-							<c:choose>
-								<c:when test="#{not empty LOGGED_USER}">
-									<p:commandButton value="#{msgs['label.generalinfo']}"
-										icon="ui-icon-extlink"
-										action="#{CompetitionsBean.generalInfoSendRedirect(competition)}" /> &nbsp;                     
-                    </c:when>
-							</c:choose>
-							<h:panelGrid columns="2" cellpadding="5">
-								<h:outputText value="#{msgs['label.min-rounds']}:"
-									style="font-weight: bold" />
-								<h:outputText value="#{competition.minRound}" />
+					<p:accordionPanel value="#{carManageBean.getUserCars(userBean.user.id)}" var="car" multiple="true" 
+					                   rendered="#carManageBean.getUserCars(userBean.user.id).size() > 0}">
+						
+						<p:tab title="#{car.marka} - #{car.model} - #{car.registrationPlate}">						
+						  <p:commandButton value="Данни за Автомобила" action="#{carManageBean.carInfoAndManage(car)}"
+						                       icon="ui-icon-extlink" style="font-weight: bold"/> &nbsp;
+						  <h:panelGrid columns="2" cellpadding="2">
+								<h:outputText value="Последно отчетен пробег:" style="font-weight: bold" />
+								<h:outputText value="#{car.currentMilage}" />
 
-								<h:outputText value="#{msgs['label.stages']}:"
-									style="font-weight: bold" />
-								<h:outputText value="#{competition.stageCount}" />
-
-							</h:panelGrid>
+								<h:outputText value="Последно въвеждани данни:" style="font-weight: bold" />
+								<h:outputText value="#{car.lastVisitDate}" />
+						  </h:panelGrid>
 						</p:tab>
 					</p:accordionPanel>
 				</p:fieldset>
-
 			</form>
 
 		</ui:define>

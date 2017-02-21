@@ -1,8 +1,8 @@
 package bg.garage.security_service;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,8 @@ import bg.garage.model.UserModel;
 import bg.garage.repository.UserRepositoryImpl;
 
 @Service("userAutenticationService")
-public class UserAutenticationService {
+public class UserAutenticationService implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Qualifier("userRepositoryImpl")
     @Autowired
@@ -32,7 +33,7 @@ public class UserAutenticationService {
 
         StringBuilder sb = new StringBuilder();
 
-        if (checkForNullOrEmptyFild(username, email, password, firstName, lastName, telephone, daysToEvent)) {
+        if (!checkForNullOrEmptyFild(username, email, password, firstName, lastName, telephone, daysToEvent)) {
             return "Попълнете всички полета !";
         }
 
@@ -74,8 +75,9 @@ public class UserAutenticationService {
 
     private boolean checkForNullOrEmptyFild(String username, String email, String password, String firstName,
             String lastName, String telephone, Integer daysToEvent) {
-        return (StringUtils.isBlank(username) || StringUtils.isBlank(email) || StringUtils.isBlank(password)
-                || StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName) || StringUtils.isBlank(telephone)
+        return ((username == null || !username.equals("")) || (email == null || !email.equals(""))
+                || (password == null || !password.equals("")) || (firstName == null || !firstName.equals(""))
+                || (lastName == null || !lastName.equals("")) || (telephone == null || !telephone.equals(""))
                 || daysToEvent == null);
     }
 }

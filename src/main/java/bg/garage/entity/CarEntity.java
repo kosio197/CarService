@@ -2,87 +2,55 @@ package bg.garage.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 
 @Entity(name = "cars")
 public class CarEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Long ownerId;// TODO change logic and remove MANY TO MANY with users
-    private PictureEntity pictures;
+    private Long ownerId;
     private String registrationPlate;
     private String marka;
     private String model;
-    private Date yearManifacture;
+    private String vin;
     private String engineType;
     private Integer currentMilage;
-
+    private Date lastVisitDate;
+    private Date yearManifacture;
     private Date roadTaxisEndDate;
     private Date anualCheckEndDate;
     private Date liabilityInsuranseEndDate;
     private Date fullInsuranseEndDate;
     private Date vinnetesEndDate;
 
-    private CarFluidEntity engineOil;
-    private CarFluidEntity transmisionOil;
-    private CarFluidEntity differentialOil;
-    private CarFluidEntity hidraulicOil;
-    private CarFluidEntity breakFluid;
-    private CarFluidEntity antifreeze;
-    private CarFluidEntity refrigerant;
-
-    private CarBeltEntity timingBelt;
-    private Set<CarBeltEntity> accessoaryBelt;
-
-    private Set<CarRepairEntity> repairs;
-
     public CarEntity() {
-        this.accessoaryBelt = new HashSet<>();
-        this.repairs = new HashSet<>();
+
     }
 
-    public CarEntity(Long userId, PictureEntity pictures, String registrationPlate, String marka, String model,
-            Date yearManifacture, String engineType, Integer currentMilage, Date roadTaxisEndDate,
-            Date anualCheckEndDate, Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate,
-            CarFluidEntity engineOil, CarFluidEntity transmisionOil, CarFluidEntity differentialOil,
-            CarFluidEntity hidraulicOil, CarFluidEntity breakFluid, CarFluidEntity antifreeze,
-            CarFluidEntity refrigerant, CarBeltEntity timingBelt) {
+    public CarEntity(Long ownerId, String registrationPlate, String marka, String model, String vin, String engineType,
+            Integer currentMilage, Date yearManifacture, Date roadTaxisEndDate, Date anualCheckEndDate,
+            Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate, Date lastVisitDate) {
         super();
-        this.ownerId = userId;
-        this.pictures = pictures;
+        this.ownerId = ownerId;
         this.registrationPlate = registrationPlate;
         this.marka = marka;
         this.model = model;
-        this.yearManifacture = yearManifacture;
+        this.vin = vin;
         this.engineType = engineType;
         this.currentMilage = currentMilage;
+        this.yearManifacture = yearManifacture;
         this.roadTaxisEndDate = roadTaxisEndDate;
         this.anualCheckEndDate = anualCheckEndDate;
         this.liabilityInsuranseEndDate = liabilityInsuranseEndDate;
         this.fullInsuranseEndDate = fullInsuranseEndDate;
         this.vinnetesEndDate = vinnetesEndDate;
-        this.engineOil = engineOil;
-        this.transmisionOil = transmisionOil;
-        this.differentialOil = differentialOil;
-        this.hidraulicOil = hidraulicOil;
-        this.breakFluid = breakFluid;
-        this.antifreeze = antifreeze;
-        this.refrigerant = refrigerant;
-        this.timingBelt = timingBelt;
+        this.lastVisitDate = lastVisitDate;
     }
 
     @Id
@@ -102,16 +70,6 @@ public class CarEntity implements Serializable {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pictures_id")
-    public PictureEntity getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(PictureEntity pictures) {
-        this.pictures = pictures;
     }
 
     @Column(name = "registration_plate", nullable = false)
@@ -139,6 +97,15 @@ public class CarEntity implements Serializable {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    @Column(name = "vin")
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 
     @Column(name = "year_manufacture", nullable = false)
@@ -213,104 +180,13 @@ public class CarEntity implements Serializable {
         this.vinnetesEndDate = vinnetesEndDate;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "engine_oil_id")
-    public CarFluidEntity getEngineOil() {
-        return engineOil;
+    @Column(name = "last_visit_date")
+    public Date getLastVisitDate() {
+        return lastVisitDate;
     }
 
-    public void setEngineOil(CarFluidEntity engineOil) {
-        this.engineOil = engineOil;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "transmision_oil_id")
-    public CarFluidEntity getTransmisionOil() {
-        return transmisionOil;
-    }
-
-    public void setTransmisionOil(CarFluidEntity transmisionOil) {
-        this.transmisionOil = transmisionOil;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "differential_oil_id")
-    public CarFluidEntity getDifferentialOil() {
-        return differentialOil;
-    }
-
-    public void setDifferentialOil(CarFluidEntity differentialOil) {
-        this.differentialOil = differentialOil;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "hidravlic_oil_id")
-    public CarFluidEntity getHidraulicOil() {
-        return hidraulicOil;
-    }
-
-    public void setHidraulicOil(CarFluidEntity hidraulicOil) {
-        this.hidraulicOil = hidraulicOil;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "break_fluid_id")
-    public CarFluidEntity getBreakFluid() {
-        return breakFluid;
-    }
-
-    public void setBreakFluid(CarFluidEntity breakFluid) {
-        this.breakFluid = breakFluid;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "antifreeze_id")
-    public CarFluidEntity getAntifreeze() {
-        return antifreeze;
-    }
-
-    public void setAntifreeze(CarFluidEntity antifreeze) {
-        this.antifreeze = antifreeze;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "refrigerant_id")
-    public CarFluidEntity getRefrigerant() {
-        return refrigerant;
-    }
-
-    public void setRefrigerant(CarFluidEntity refrigerant) {
-        this.refrigerant = refrigerant;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "timing_belt_id")
-    public CarBeltEntity getTimingBelt() {
-        return timingBelt;
-    }
-
-    public void setTimingBelt(CarBeltEntity timingBelt) {
-        this.timingBelt = timingBelt;
-    }
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "cars_car_belts", joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "car_belts_id", referencedColumnName = "id"))
-    public Set<CarBeltEntity> getAccessoaryBelt() {
-        return accessoaryBelt;
-    }
-
-    public void setAccessoaryBelt(Set<CarBeltEntity> accessoaryBelt) {
-        this.accessoaryBelt = accessoaryBelt;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "cars_repairs", joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "repair_id", referencedColumnName = "id"))
-    public Set<CarRepairEntity> getRepairs() {
-        return repairs;
-    }
-
-    public void setRepairs(Set<CarRepairEntity> repairs) {
-        this.repairs = repairs;
+    public void setLastVisitDate(Date lastVisitDate) {
+        this.lastVisitDate = lastVisitDate;
     }
 
 }

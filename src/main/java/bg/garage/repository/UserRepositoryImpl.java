@@ -1,5 +1,6 @@
 package bg.garage.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,8 @@ import bg.garage.model.CarModel;
 import bg.garage.model.UserModel;
 
 @Component
-public class UserRepositoryImpl {
+public class UserRepositoryImpl implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Autowired
     private UserRepository userRepository;
@@ -45,12 +47,18 @@ public class UserRepositoryImpl {
         return models;
     }
 
+    public void deleteUser(Long id) {
+        carRepositoryImpl.deleteCarByUser(id);
+        userRepository.delete(id);
+    }
+
     private UserModel userEntityToModel(UserEntity userEntity) {
         if (userEntity == null) {
             return null;
         }
 
         Set<CarModel> cars = carRepositoryImpl.getUserCars(userEntity.getId());
+
         UserModel model = new UserModel(userEntity.getId(), userEntity.getUsername(), userEntity.getPassword(),
                 userEntity.getRole(), userEntity.getFirstName(), userEntity.getLastName(), userEntity.getEmail(),
                 userEntity.getLastVisite(), userEntity.getTelephone(), userEntity.getDaysToEvent(), cars);
@@ -61,6 +69,10 @@ public class UserRepositoryImpl {
         UserEntity entity = new UserEntity(model.getUsername(), model.getPassword(), model.getRole(),
                 model.getFirstName(), model.getLastName(), model.getEmail(), model.getLastVisit(), model.getTelephone(),
                 model.getDaysToEvent());
+        if (model.getId() != null) {
+            entity.setId(model.getId());
+        }
+
         return entity;
     }
 

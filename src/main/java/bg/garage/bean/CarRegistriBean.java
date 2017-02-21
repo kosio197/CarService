@@ -1,17 +1,23 @@
-package bg.garage.model;
+package bg.garage.bean;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.springframework.stereotype.Component;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
-@Component("carModel")
-public class CarModel implements Serializable {
+import bg.garage.model.CarModel;
+import bg.garage.servicesImpl.VehicleServiceImpl;
+
+@ManagedBean(name = "carRegistriBean")
+@RequestScoped
+public class CarRegistriBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @ManagedProperty("#{vehicleServiceImpl}")
+    private VehicleServiceImpl vehicleServiceImpl;
+
     private Long ownerId;
 
     private String registrationPlate;
@@ -30,65 +36,19 @@ public class CarModel implements Serializable {
     private Date fullInsuranseEndDate;
     private Date vinnetesEndDate;
 
-    private Set<RepairModel> repairs = new HashSet<>();
-
-    public CarModel() {
-
+    public void addCar(long ownerId) {
+        CarModel carModel = new CarModel(ownerId, registrationPlate, marka, model, vin, engineType, currentMilage,
+                yearManifacture, roadTaxisEndDate, anualCheckEndDate, liabilityInsuranseEndDate, fullInsuranseEndDate,
+                vinnetesEndDate, lastVisitDate);
+        vehicleServiceImpl.addCar(carModel);
     }
 
-    public CarModel(Long ownerId, String registrationPlate, String marka, String model, String vin, String engineType,
-            Integer currentMilage, Date yearManifacture, Date roadTaxisEndDate, Date anualCheckEndDate,
-            Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate, Date lastVisitDate) {
-        this();
-        this.ownerId = ownerId;
-        this.registrationPlate = registrationPlate;
-        this.marka = marka;
-        this.model = model;
-        this.vin = vin;
-        this.engineType = engineType;
-        this.currentMilage = currentMilage;
-        this.yearManifacture = yearManifacture;
-        this.roadTaxisEndDate = roadTaxisEndDate;
-        this.anualCheckEndDate = anualCheckEndDate;
-        this.liabilityInsuranseEndDate = liabilityInsuranseEndDate;
-        this.fullInsuranseEndDate = fullInsuranseEndDate;
-        this.vinnetesEndDate = vinnetesEndDate;
-        this.lastVisitDate = lastVisitDate;
+    public VehicleServiceImpl getVehicleServiceImpl() {
+        return vehicleServiceImpl;
     }
 
-    public CarModel(Long id, Long ownerId, String registrationPlate, String marka, String model, String vin,
-            String engineType, Integer currentMilage, Date yearManifacture, Date roadTaxisEndDate,
-            Date anualCheckEndDate, Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate,
-            Date lastVisitDate, Set<RepairModel> repairs) {
-        this();
-        this.id = id;
-        this.ownerId = ownerId;
-        this.registrationPlate = registrationPlate;
-        this.marka = marka;
-        this.model = model;
-        this.vin = vin;
-        this.engineType = engineType;
-        this.currentMilage = currentMilage;
-        this.yearManifacture = yearManifacture;
-        this.roadTaxisEndDate = roadTaxisEndDate;
-        this.anualCheckEndDate = anualCheckEndDate;
-        this.liabilityInsuranseEndDate = liabilityInsuranseEndDate;
-        this.fullInsuranseEndDate = fullInsuranseEndDate;
-        this.vinnetesEndDate = vinnetesEndDate;
-        this.lastVisitDate = lastVisitDate;
-        this.repairs = repairs;
-    }
-
-    public void addRepair(RepairModel repair) {
-        this.repairs.add(repair);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setVehicleServiceImpl(VehicleServiceImpl vehicleServiceImpl) {
+        this.vehicleServiceImpl = vehicleServiceImpl;
     }
 
     public Long getOwnerId() {
@@ -147,6 +107,14 @@ public class CarModel implements Serializable {
         this.currentMilage = currentMilage;
     }
 
+    public Date getLastVisitDate() {
+        return lastVisitDate;
+    }
+
+    public void setLastVisitDate(Date lastVisitDate) {
+        this.lastVisitDate = lastVisitDate;
+    }
+
     public Date getYearManifacture() {
         return yearManifacture;
     }
@@ -193,22 +161,6 @@ public class CarModel implements Serializable {
 
     public void setVinnetesEndDate(Date vinnetesEndDate) {
         this.vinnetesEndDate = vinnetesEndDate;
-    }
-
-    public Set<RepairModel> getRepairs() {
-        return repairs;
-    }
-
-    public void setRepairs(Set<RepairModel> repairs) {
-        this.repairs = repairs;
-    }
-
-    public Date getLastVisitDate() {
-        return lastVisitDate;
-    }
-
-    public void setLastVisitDate(Date lastVisitDate) {
-        this.lastVisitDate = lastVisitDate;
     }
 
 }

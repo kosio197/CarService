@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletException;
 
 import bg.garage.model.UserModel;
 import bg.garage.security_service.UserAutenticationService;
@@ -37,19 +36,19 @@ public class UserBean implements Serializable {
     }
 
     public boolean hasRoleAdmin() {
-        return user.getRole().equals("ADMIN");
+        return user != null ? user.getRole().equals("ADMIN") : false;
     }
 
-    public void userRegistryPageSendRedirect() throws ServletException, IOException {
+    public void userRegistryPageSendRedirect() throws IOException {
         sendRedirect("/CarService/page/userRegistry.html");
     }
 
-    public void logout() throws ServletException, IOException {
+    public void logout() throws IOException {
         this.user = null;
         sendRedirect("/CarService/page/login.html");
     }
 
-    public void login() throws ServletException, IOException {
+    public void login() throws IOException {
         UserModel targetUser = this.userAutenticationService.autenticateUser(username, password);
 
         if (targetUser != null) {
@@ -61,7 +60,7 @@ public class UserBean implements Serializable {
         }
     }
 
-    private void sendRedirect(String path) throws ServletException, IOException {
+    private void sendRedirect(String path) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect(path);
     }
 

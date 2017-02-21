@@ -49,22 +49,10 @@
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>/WEB-INF/faces-config.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-        <param-value>.xhtml</param-value>
-    </context-param>
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
 		<param-value>afterwork</param-value>
-	</context-param>
-	<context-param>
-		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-		<param-value>6LeYtA8UAAAAAHXPBea_IRVvLWfV6RVtzYalbM2m</param-value>
-	</context-param>
-	<context-param>
-		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-		<param-value>6LeYtA8UAAAAAOgxL3yPQDWIEhSRzo7-vxNWpbki</param-value>
 	</context-param>
 
 <!--   ##############  -->

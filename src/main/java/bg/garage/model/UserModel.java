@@ -21,10 +21,10 @@ public class UserModel implements Serializable {
     private Date lastVisit = new Date();
     private String telephone;
     private Integer daysToEvent;
-    private Set<CarModel> userCars;
+    private Set<CarModel> userCars = new HashSet<CarModel>();
 
     public UserModel() {
-        this.userCars = new HashSet<>();
+
     }
 
     public UserModel(String username, String password, String firstName, String lastName, String email,
