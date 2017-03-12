@@ -41,16 +41,6 @@ public class RepairModel implements Serializable {
         this.recomendetUpcomingRepair = recomendetUpcomingRepair;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof RepairModel) {
-            if (((RepairModel) obj).getId() == this.id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Long getId() {
         return id;
     }
@@ -97,6 +87,21 @@ public class RepairModel implements Serializable {
 
     public void setRecomendetUpcomingRepair(String recomendetUpcomingRepair) {
         this.recomendetUpcomingRepair = recomendetUpcomingRepair;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof RepairModel) {
+            if (((RepairModel) obj).getId() == this.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.repairDate.toString() + "" + this.currentMilage;
     }
 
 }

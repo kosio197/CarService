@@ -4,22 +4,20 @@ import java.io.Serializable;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import bg.garage.model.UserModel;
-import bg.garage.repository.UserRepositoryImpl;
+import bg.garage.services.UserService;
 
 @Service("userAutenticationService")
 public class UserAutenticationService implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Qualifier("userRepositoryImpl")
     @Autowired
-    private UserRepositoryImpl userRepository;
+    private UserService userService;
 
     public UserModel autenticateUser(String username, String password) {
-        UserModel user = this.userRepository.getUser(username);
+        UserModel user = this.userService.getUserByUsername(username);
         if (user != null) {
             if (password.equals(user.getPassword())) {
                 return user;
@@ -41,12 +39,12 @@ public class UserAutenticationService implements Serializable {
             return "Въведете валиден имеил адрес !";
         }
 
-        UserModel userByUsername = this.userRepository.getUser(username);
+        UserModel userByUsername = this.userService.getUserByUsername(username);
         if (userByUsername != null) {
             sb.append("Потребител с име " + username + " вече съществува. Моля изберете друго потребителско име! \n");
         }
 
-        UserModel userByEmail = this.userRepository.getUserByEmail(email);
+        UserModel userByEmail = this.userService.getUserByEmail(email);
         if (userByEmail != null) {
             sb.append("Потребител с имеил адрес " + email + " вече съществува. Моля посочете друг имеил адрес! ");
         }
@@ -79,5 +77,18 @@ public class UserAutenticationService implements Serializable {
                 || (password == null || !password.equals("")) || (firstName == null || !firstName.equals(""))
                 || (lastName == null || !lastName.equals("")) || (telephone == null || !telephone.equals(""))
                 || daysToEvent == null);
+    }
+
+    public String verificateUserProparty(Long userId, String userEmail) {
+        if (!validateEmail(userEmail)) {
+            return "Въведете валиден имеил адрес !";
+        }
+        UserModel model = userService.getUserByEmail(userEmail);
+        if (model == null) {
+            return "";
+        } else if (model.getId() == userId) {
+            return "";
+        }
+        return "Потребител с имеил адрес " + userEmail + " вече съществува. Моля посочете друг имеил адрес! ";
     }
 }

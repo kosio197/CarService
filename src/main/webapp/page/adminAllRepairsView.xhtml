@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="template/layout.xhtml">
+		<ui:define name="content">
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+
+            <h1 align="center">Last Registered Repairs</h1>
+            <p:separator></p:separator>
+			<p:accordionPanel value="#{AdminPanelRepairsManageBean.allRepairs}" var="repair" multiple="true" activeIndex="null"
+				                            rendered="#{AdminPanelRepairsManageBean.allRepairs.size() > 0}">
+				<p:tab title="#{AdminPanelRepairsManageBean.tabTitle(repair)}">
+					
+					<p:commandButton value="Save Changes" action="#{AdminPanelRepairsManageBean.editRepair(repair)}"
+						              style="font-weight: bold" icon="ui-icon-check" ajax="falce" />
+					<p:spacer width="20"></p:spacer>
+					
+					<p:commandButton value=" Delete Repair" action="#{AdminPanelRepairsManageBean.deleteRepair(repair.id)}"
+						              style="font-weight: bold" icon="ui-icon-check" ajax="false" />
+
+					<h:panelGrid columns="2" cellpadding="2">
+						
+			      		<h:outputLabel value="Repair Date: " />
+                        <p:calendar value="#{repair.repairDate}" navigator="true" pattern="dd-MM-yyyy"  />
+
+                        <h:outputText value="Current Milage: " />
+                        <p:inputNumber value="#{repair.currentMilage}" />
+						
+						<h:outputText value="Description: " style="font-weight: bold" />
+						<p:inputTextarea rows="10" cols="50" autoResize="false" value="#{repair.description}" />
+
+						<h:outputText value="Recomendet Upcoming Repair:" style="font-weight: bold" />
+						<p:inputTextarea rows="5" cols="50" autoResize="false" value="#{repair.recomendetUpcomingRepair}" />
+						
+					</h:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

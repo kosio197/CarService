@@ -1,9 +1,9 @@
 package bg.garage.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -21,10 +21,10 @@ public class UserModel implements Serializable {
     private Date lastVisit = new Date();
     private String telephone;
     private Integer daysToEvent;
-    private Set<CarModel> userCars = new HashSet<CarModel>();
+    private List<CarModel> userCars;
 
     public UserModel() {
-
+        this.userCars = new ArrayList<>();
     }
 
     public UserModel(String username, String password, String firstName, String lastName, String email,
@@ -40,7 +40,7 @@ public class UserModel implements Serializable {
     }
 
     public UserModel(Long id, String username, String password, String role, String firstName, String lastName,
-            String email, Date lastVisit, String telephone, Integer daysToEvent, Set<CarModel> userCars) {
+            String email, Date lastVisit, String telephone, Integer daysToEvent, List<CarModel> userCars) {
         super();
         this.id = id;
         this.username = username;
@@ -139,11 +139,11 @@ public class UserModel implements Serializable {
         this.daysToEvent = daysToEvent;
     }
 
-    public Set<CarModel> getUserCars() {
+    public List<CarModel> getUserCars() {
         return userCars;
     }
 
-    public void setUserCars(Set<CarModel> userCars) {
+    public void setUserCars(List<CarModel> userCars) {
         this.userCars = userCars;
     }
 
@@ -155,6 +155,11 @@ public class UserModel implements Serializable {
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.firstName + " " + this.lastName + "   email " + this.email;
     }
 
 }

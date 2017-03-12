@@ -1,48 +1,61 @@
-package bg.garage.repository;
+package bg.garage.servicesImpl;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import bg.garage.entity.RepairEntity;
 import bg.garage.model.RepairModel;
+import bg.garage.repository.RepairRepository;
+import bg.garage.services.RepairService;
 
-@Component
-public class RepairRepositoryImpl implements Serializable {
+@Service("repairServiceImpl")
+public class RepairServiceImpl implements RepairService, Serializable {
     private static final long serialVersionUID = 1L;
+
     @Autowired
     private RepairRepository repairRepository;
 
+    @Override
     public void addRepair(RepairModel model) {
         repairRepository.save(repairModelToEntity(model));
     }
 
-    public Set<RepairModel> findAllByCarId(Long id) {
-
-        Set<RepairModel> repairs = new HashSet<>();
-
-        Iterable<RepairEntity> carRepairs = repairRepository.findAllByCarId(id);
-
-        if (carRepairs != null) {
-
-            for (RepairEntity repairEntity : carRepairs) {
-                repairs.add(repairEntityToModel(repairEntity));
-            }
-
+    @Override
+    public List<RepairModel> getAllRepairs() {
+        List<RepairModel> repairs = new ArrayList<>();
+        Iterable<RepairEntity> carRepairs = repairRepository.findAllByOrderByDate(new PageRequest(0, 15));
+        for (RepairEntity repairEntity : carRepairs) {
+            repairs.add(repairEntityToModel(repairEntity));
         }
+
         return repairs;
     }
 
+    @Override
+    public List<RepairModel> findAllByCarId(Long id) {
+        List<RepairModel> repairs = new ArrayList<>();
+        Iterable<RepairEntity> carRepairs = repairRepository.findAllRepairByCarId(id);
+        for (RepairEntity repairEntity : carRepairs) {
+            repairs.add(repairEntityToModel(repairEntity));
+        }
+
+        return repairs;
+    }
+
+    @Override
     public void deleteRepair(Long id) {
         repairRepository.delete(id);
     }
 
+    @Override
     public void deleteRepairsByCar(Long deletedCarId) {
         for (RepairModel model : findAllByCarId(deletedCarId)) {
-            deleteRepair(model.getCarId());
+            deleteRepair(model.getId());
         }
     }
 
@@ -60,4 +73,5 @@ public class RepairRepositoryImpl implements Serializable {
                 entity.getCurrentMilage(), entity.getDescription(), entity.getRecomendetUpcomingRepair());
         return model;
     }
+
 }

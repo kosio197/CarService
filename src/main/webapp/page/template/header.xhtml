@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -9,29 +10,25 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:body >
 	<ui:composition>
-	
-	<!-- <img src="../images/sky1.jpg" /> --> 
-	
-        <div align="right" style="background-image: url('../images/roadHeader.png'); background-size: 85%;" >
-	        <h:panelGrid columns="5" cellpadding="1" border="2">
-	            <p:commandButton rendered="#{userBean.hasRoleAdmin()}" value="All Users"  action="#{userBean.login()}" 
-	                                    icon="ui-icon-extlink" ajax="false" style="width:100px;height:25px; font-size:13px" />
-	            
-	            <p:commandButton rendered="#{userBean.hasRoleAdmin()}" value="All Cars"   action="/" 
-	                                    icon="ui-icon-extlink" ajax="false" style="width:100px;height:25px; font-size:13px"/>
-	
-		        <p:commandButton  value="Logout" action="#{userBean.logout()}" 
-		                         icon="ui-icon-extlink" style="width:100px;height:25px; font-size:13px"/>
-	        </h:panelGrid> 
-	                   <h:panelGrid columns="5" cellpadding="1" border="2">
-                <p:commandButton rendered="#{userBean.hasRoleAdmin()}" value="All Users"  action="#{userBean.login()}" 
-                                        icon="ui-icon-extlink" ajax="false" style="width:100px;height:25px; font-size:13px" />
+        <div align="right"  style="background-image: url('../images/sky.jpg'); background-size: 45%;" >
+	        <h:panelGrid columns="5" cellpadding="1" border="2"> 
+	           <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Users"  action="/page/adminAllUsersView.html" 
+                                        icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px" />
                 
-                <p:commandButton rendered="#{userBean.hasRoleAdmin()}" value="All Cars"   action="/" 
-                                        icon="ui-icon-extlink" ajax="false" style="width:100px;height:25px; font-size:13px"/>
-    
-                <p:commandButton  value="Logout" action="#{userBean.logout()}" 
-                                 icon="ui-icon-extlink" style="width:100px;height:25px; font-size:13px"/>
+                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Cars"   action="/page/adminAllCarsView.html" 
+                                        icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px"/>
+                
+                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Repairs"   action="/page/adminAllRepairsView.html" 
+                                        icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px"/>
+                
+                <p:commandButton  rendered="#{userManageBean.autenticated}" value="Back" action="/page/currentUserView.html" 
+                                 icon="ui-icon-extlink" style="width:120px;height:25px; font-size:13px"/>
+            
+            </h:panelGrid> 
+	        <h:panelGrid columns="5" cellpadding="1" border="2">
+
+                <p:commandButton  rendered="#{userManageBean.autenticated}" value="Logout" action="#{userManageBean.logout()}" 
+                                 icon="ui-icon-extlink" style="width:120px;height:25px; font-size:13px"/>
             </h:panelGrid> 
         </div>
 	</ui:composition>

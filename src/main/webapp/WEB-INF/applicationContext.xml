@@ -4,14 +4,16 @@
 	   xmlns:tx="http://www.springframework.org/schema/tx"	
 	   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:task="http://www.springframework.org/schema/task"
 	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                     http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+                    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+                    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<context:annotation-config />
 	<context:component-scan base-package="bg.garage" />
-
+    <task:annotation-driven />
     <tx:annotation-driven transaction-manager="transactionManager"/>
 	<jpa:repositories base-package="bg.garage.repository" />
 
@@ -34,8 +36,33 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/my_garage_db" />
+		<property name="url" value="jdbc:mysql://localhost:3306/my_garage_db?useUnicode=true&amp;connectionCollation=utf8_general_ci&amp;characterSetResults=utf8&amp;characterEncoding=utf-8" />
 		<property name="username" value="kosio" />
 		<property name="password" value="k0510" />
 	</bean>
+	
+<!-- Production implementation of the JavaMailSender interface, supporting both JavaMail MimeMessages and Spring SimpleMailMessages -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="konstantin.m.petrov" />
+        <property name="password" value="kosio197" />
+ 
+        <!-- The name of the property, following JavaBean naming conventions -->
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+	    
+    <!--  	<task:scheduler id="userNotificationScheduler" />
+	
+	<task:scheduled-tasks scheduler="userNotificationScheduler">
+	        <task:scheduled ref="notificationService" method="sendNotification" cron="1 * * * *" />
+	</task:scheduled-tasks> -->
+
 </beans>

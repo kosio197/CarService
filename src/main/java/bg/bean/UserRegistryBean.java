@@ -1,4 +1,4 @@
-package bg.garage.bean;
+package bg.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -44,18 +44,20 @@ public class UserRegistryBean implements Serializable {
         if (propertyErrorMesage.equals("")) {
             addNewUser();
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(propertyErrorMesage));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Неуспешна Регистрация", propertyErrorMesage));
         }
     }
 
     private void addNewUser() throws IOException {
         UserModel user = new UserModel(username, password, firstName, lastName, email, telephone, daysToEvent);
         userService.addUser(user);
-        sendRedirect("/CarService/page/login.html");
+        sendRedirect("/page/login.html");
     }
 
     private void sendRedirect(String path) throws IOException {
-        FacesContext.getCurrentInstance().getExternalContext().redirect(path);
+        String relPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(relPath + path);
     }
 
     public UserServiceImpl getUserService() {

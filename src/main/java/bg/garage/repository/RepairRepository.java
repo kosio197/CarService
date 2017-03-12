@@ -1,5 +1,8 @@
 package bg.garage.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +14,9 @@ import bg.garage.entity.RepairEntity;
 public interface RepairRepository extends CrudRepository<RepairEntity, Long> {
 
     @Query(value = "SELECT r FROM repairs r WHERE r.carId =:carId")
-    Iterable<RepairEntity> findAllByCarId(@Param("carId") Long carId);
+    Iterable<RepairEntity> findAllRepairByCarId(@Param("carId") Long carId);
+
+    @Query(value = "SELECT r FROM repairs r ORDER BY r.repairDate DESC ")
+    List<RepairEntity> findAllByOrderByDate(Pageable pageable);
 
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="template/layout.xhtml">
+		<ui:define name="content">
+
+         <p:messages id="messages" showDetail="true" autoUpdate="true" />
+            <h1 align="center"> Registered Vehicles</h1>
+            <p:separator></p:separator>
+         
+		 <h:form >   
+		   <p:dataTable  var="car" value="#{adminPanelCarsManageBean.allCars}" widgetVar="carsTable" 
+                 emptyMessage="No cars found with given criteria"  
+                 editable="true" editMode="cell" >
+
+		       <f:facet name="header">
+		            <p:outputPanel>
+		                <h:outputText value="Search all fields: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()" style="width:200px" placeholder="Enter keyword"/>
+		            </p:outputPanel>
+		        </f:facet>
+		        
+		       <p:separator></p:separator>
+		 
+		       <p:column headerText="Model">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{car.model}" /></f:facet>
+		               <f:facet name="input"><p:inputText id="modelInput" value="#{car.model}" style="width:100%"/></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       <p:column headerText="Marka">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{car.marka}" /></f:facet>
+		               <f:facet name="input"><p:inputText value="#{car.marka}" style="width:100%" /></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+		       <p:column headerText="Engine Type">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.engineType}" /></f:facet>
+                       <f:facet name="input"><p:inputText value="#{car.engineType}" style="width:100%"/></f:facet>
+                   </p:cellEditor>
+               </p:column>
+		       <p:column headerText="Registration Plate">
+		           <p:cellEditor>
+		               <f:facet name="output"><h:outputText value="#{car.registrationPlate}" /></f:facet>
+                       <f:facet name="input"><p:inputText value="#{car.registrationPlate}" style="width:100%" /></f:facet>
+		           </p:cellEditor>
+		       </p:column>
+               <p:column headerText="Manifacture Year">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.yearManifacture}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.yearManifacture}" style="width:100%"> </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column>
+               <p:column headerText="Milage">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.currentMilage}" /></f:facet>
+                       <f:facet name="input"><p:inputText value="#{car.currentMilage}" style="width:100%" /></f:facet>
+                   </p:cellEditor>
+               </p:column>
+               <p:column headerText="VIN">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.vin}" /></f:facet>
+                       <f:facet name="input"><p:inputText value="#{car.vin}" style="width:100%" /></f:facet>
+                   </p:cellEditor>
+               </p:column>
+               
+              <!--   -->
+               <p:column headerText="Road Taxis">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.roadTaxisEndDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.roadTaxisEndDate}"> </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column>  
+               <p:column headerText="Anual Check">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.anualCheckEndDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.anualCheckEndDate}"> </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column> 
+               <p:column headerText="Liability Insuranse">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.liabilityInsuranseEndDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.liabilityInsuranseEndDate}"> </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column> 
+               <p:column headerText="Full Insuranse">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.fullInsuranseEndDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.fullInsuranseEndDate}"> </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column>
+               <p:column headerText="Vinnetes">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.vinnetesEndDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.vinnetesEndDate}" > </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column> 
+               <p:column headerText="Last Visit">
+                   <p:cellEditor>
+                       <f:facet name="output"><h:outputText value="#{car.lastVisitDate}" /></f:facet>
+                       <f:facet name="input"><p:calendar value="#{car.lastVisitDate}" > </p:calendar></f:facet>
+                   </p:cellEditor>
+               </p:column>
+               <p:column headerText="Owner">
+                      <h:outputText value="#{adminPanelCarsManageBean.getOwnerName(car.ownerId)}" />
+               </p:column> 
+
+
+               Manage And Navigation 
+               <p:column headerText="Car Repairs">
+                 <p:commandButton  value="View" action="#{carManageBean.carInfoAndManage(car)}" ajax="false"/>
+               </p:column>
+               <p:column headerText="Save Change">
+                 <p:commandButton  value="Save" action="#{adminPanelCarsManageBean.editCar(car)}" ajax="false"/>
+               </p:column>
+               
+               <p:column headerText="*" style="width:20px" > *** </p:column>
+               
+               <p:column headerText="Delete Car">
+                 <p:commandButton  value="Delete" action="#{adminPanelCarsManageBean.deleteCar(car)}" ajax="false"/>
+               </p:column>
+
+		   </p:dataTable>
+		</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

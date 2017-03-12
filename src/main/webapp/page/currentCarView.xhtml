@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+    <ui:composition template="template/layout.xhtml">
+     <ui:define name="content">
+
+                <h1 align="center">#{carManageBean.currentCar.marka} #{carManageBean.currentCar.model} 
+                                                 #{carManageBean.currentCar.registrationPlate}</h1>
+                                                 
+           <p:separator />
+              <p:commandButton  value=" Назад " action="#{carManageBean.backToUserView()}" 
+                                icon="ui-icon-back" ajax="false" />
+                 <p:spacer width="10"></p:spacer>
+              <p:commandButton value=" Добави ремонт " action="#{carManageBean.addNewRepair()}"
+                               icon="ui-icon-extlink" style="font-weight: bold" ajax="falce"/>
+                 <p:spacer width="20"></p:spacer>              
+              <p:commandButton  value=" Изтриване на Автомобила " action="#{carManageBean.deleteCurrentCar()}" 
+                                icon="ui-icon-extlink" ajax="false"/>
+           <p:separator />
+           <br />
+                
+    <!-- CURRENT CAR PROPARTY   ################################################################################# -->
+                  <h:form >
+                   <p:fieldset legend="Обновяване на данните"  toggleable="true" toggleSpeed="500" >                     
+                        <h:panelGrid id="user-property-grid" columns="4" cellpadding="2" border="5">
+                            
+                            <h:outputText value="Последно преглеждане: " />
+                            <h:outputText value="#{carManageBean.currentCarLastVisiteDate()}" />
+
+                            <h:outputText value="" />
+                            <h:outputText value="" />
+                                                        
+                            <h:outputText value="Марка: *" />
+                            <p:inputText value="#{carManageBean.currentCar.marka}" required="true" />
+                            
+                            <h:outputText value="Модел: *" />
+                            <p:inputText value="#{carManageBean.currentCar.model}"  required="true" />
+    
+                            <h:outputText value="Регистрационен номер: *" />
+                            <p:inputText value="#{carManageBean.currentCar.registrationPlate}" required="true" />
+    
+                            <h:outputLabel value="Показания на километража: *" />
+                            <p:inputNumber value="#{carManageBean.currentCar.currentMilage}" required="true" />
+    
+                            <h:outputText value="Номер на рамата:" />
+                            <p:inputText value="#{carManageBean.currentCar.vin}" />
+    
+                            <h:outputText value="Двигател /обем, гориво, тип/: *" />
+                            <p:inputText value="#{carManageBean.currentCar.engineType}" required="true"/>
+                       
+                            <h:outputText value="Година на производство: *" />
+                            <p:inputText value="#{carManageBean.carYearManifacture}" required="true"/>
+                            
+
+                            
+                            <h:outputLabel value="Гоишен данък:" />
+                            <p:calendar value="#{carManageBean.currentCar.roadTaxisEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Гражданска от говорност:" />
+                            <p:calendar value="#{carManageBean.currentCar.liabilityInsuranseEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Автокаско:" />
+                            <p:calendar value="#{carManageBean.currentCar.fullInsuranseEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Годишен технически преглед:" />
+                            <p:calendar value="#{carManageBean.currentCar.anualCheckEndDate}" navigator="true" pattern="dd-MM-yyyy" />
+                            
+                            <h:outputText value="Винетка:" />
+                            <p:calendar  value="#{carManageBean.currentCar.vinnetesEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+                        </h:panelGrid>
+                        <br />
+                        <p:commandButton  value="Запамети промените" action="#{carManageBean.editCurrentCar()}" 
+                               icon="ui-icon-check" ajax="false" />
+               </p:fieldset>
+             </h:form>  
+   <!-- /CURRENT CAR PROPARTY   ################################################################################# -->
+            <br />
+            <p:separator />
+            <br />
+
+   <!-- CURRENT REGISTERED REPAIR  ############################################################################### -->   
+            
+                <p:fieldset legend="Технически обслужвания и Извършени ремонти" toggleable="true" toggleSpeed="500">
+                    <p:accordionPanel value="#{carManageBean.currentCar.carRepairs}" var="repair" multiple="true" 
+                                       rendered="#{carManageBean.currentCar.carRepairs.size() > 0}">
+                        <p:tab title="Дата: #{carManageBean.currentRepairLastVisiteDate(repair) }  Пробег: #{repair.currentMilage}км.">
+			              <p:commandButton value=" Запамети промените" action="#{carManageBean.editRepair(repair)}"
+			                               icon="ui-icon-check" style="font-weight: bold" ajax="falce"/>
+			                 <p:spacer width="20"></p:spacer>              
+			              <p:commandButton  value=" Изтриване "  action="#{carManageBean.deleteRepair(repair.id)}"
+			                                icon="ui-icon-check" ajax="false"/>
+                          
+                          <h:panelGrid columns="2" cellpadding="2">
+                                <h:outputText value="Описание: " style="font-weight: bold" />
+                                <p:inputTextarea  rows="10" cols="50" autoResize="false" value="#{repair.description}" />
+
+                                <h:outputText value="Препоръчителни ремонти:" style="font-weight: bold" />
+                                <p:inputTextarea rows="5" cols="50" autoResize="false" value="#{repair.recomendetUpcomingRepair}"/>
+                          </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:fieldset>
+            
+    <!-- /CURRENT REGISTERED REPAIR ############################################################################## -->
+     </ui:define>
+    </ui:composition>
+</h:body>
+</html>

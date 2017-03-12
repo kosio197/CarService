@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="template/layout.xhtml">
+		<ui:define name="content">
+
+                <h2 align="center"> Обслужвания и Ремонти</h2>
+                <h2 align="center"> на</h2>
+                <h1 align="center">#{carManageBean.currentCar.marka} #{carManageBean.currentCar.model} 
+                                                 #{carManageBean.currentCar.registrationPlate}</h1>
+                
+           <p:separator />
+              <p:commandButton  value=" Назад " action="#{carManageBean.backToUserView()}" 
+                                icon="ui-icon-back" ajax="false" />
+           <p:separator />
+           <br />
+
+				<h:form>
+					<h:panelGrid id="repair-registration-grid" columns="2"
+						cellpadding="5">
+						<f:facet name="header">
+							<p:messages id="messages" showDetail="true" autoUpdate="true" />
+						</f:facet>
+
+                            <h:outputLabel value="Дата:" />
+                            <p:calendar value="#{repairRegistryBean.repairDate}" navigator="true" pattern="dd-MM-yyyy"  />
+
+                            <h:outputText value="Показания на километража: *" />
+                            <p:inputNumber value="#{repairRegistryBean.currentMilage}"  required="true" />
+    
+                            <h:outputText value="Описание на ремонта и вложените части: *" />
+                            <p:inputTextarea value="#{repairRegistryBean.description}" required="true" />
+    
+                            <h:outputLabel value="Препоръчителни предстоящи иемонти:" />
+                            <p:inputTextarea value="#{repairRegistryBean.recomendetUpcomingRepair}" />
+
+					</h:panelGrid>
+					<br />
+					<p:commandButton id="btnAll" process="@all"
+						action="#{repairRegistryBean.addRepair(carManageBean.currentCar)}" value="Впиши на #{carManageBean.currentCar.registrationPlate}"
+						icon="ui-icon-check" ajax="false"/>
+				</h:form>
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

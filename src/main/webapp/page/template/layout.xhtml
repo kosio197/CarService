@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -16,7 +17,7 @@
 <h:body>
 	<p:layout fullPage="true">
 
-		<p:layoutUnit position="north" size="90" resizable="true">
+		<p:layoutUnit position="north" size="#{layoutManageBean.nordSize}" resizable="true">
 			<h:form>
 				<ui:insert name="header">
 					<ui:include src="/page/template/header.xhtml" />
@@ -24,7 +25,7 @@
 			</h:form>
 		</p:layoutUnit>
 
-		<p:layoutUnit position="west" size="350" header="Профилактика и Ремонти по Автомобила"
+		<p:layoutUnit position="west" size="#{layoutManageBean.westSize}" header="#{layoutManageBean.westHeader}"
 			resizable="true" closable="true" collapsible="true">
 			<h:form>
 				<ui:insert name="left_menu">
@@ -33,12 +34,14 @@
 			</h:form>
 		</p:layoutUnit>
 
-		<p:layoutUnit position="east" size="340" header="Полезна Информация"
+		<p:layoutUnit position="east" size="#{layoutManageBean.eastSize}" header="#{layoutManageBean.eastHeader}"
 			resizable="true" closable="true" collapsible="true" effect="drop">
 			<h:form>
+			<div id = "east">
 				<ui:insert name="right_menu">
 					<ui:include src="/page/template/right_menu.xhtml" />
 				</ui:insert>
+			</div>
 			</h:form>
 		</p:layoutUnit>
 
@@ -54,7 +57,7 @@
 		</p:layoutUnit>
 
 
-		<p:layoutUnit position="south" size="240" header="Основни индикаций използвани в повечето автомобилни табла:"
+		<p:layoutUnit position="south" size="#{layoutManageBean.southSize}" header="#{layoutManageBean.southHeader}"
 			effect="drop" resizable="true" closable="true" collapsible="true">
 			<h:form>
 				<ui:insert name="footer">

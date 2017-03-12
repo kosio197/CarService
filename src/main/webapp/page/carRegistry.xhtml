@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="template/layout.xhtml">
+		<ui:define name="content">
+		
+		
+		                <h1 align="center"> ******** </h1>
+                                                 
+          <p:separator />
+              <p:commandButton  value=" Назад " action="#{carRegistriBean.backToUserView()}" 
+                                icon="ui-icon-back" ajax="false" />
+          <p:separator />
+          <br />
+
+    <!-- CAR REGISTER fORM ####################################################################################### -->   
+              <h:form id="carrr">
+                <p:fieldset legend="! Полетата със звездичка са задължителни !" >
+                       <h:panelGrid id="car-property-grid" columns="4" cellpadding="2" border="5">  
+    
+                            <h:outputText value="Марка: *" />
+                            <p:inputText value="#{carRegistriBean.marka}"  />
+                            
+                            <h:outputText value="Модел: *" />
+                            <p:inputText value="#{carRegistriBean.model}"  />
+    
+                            <h:outputText value="Регистрационен номер: *" />
+                            <p:inputText value="#{carRegistriBean.registrationPlate}" />
+    
+                            <h:outputLabel value="Показания на километража: *" />
+                            <p:inputNumber value="#{carRegistriBean.currentMilage}"  />
+    
+                            <h:outputText value="Номер на рамата:" />
+                            <p:inputText value="#{carRegistriBean.vin}" />
+    
+                            <h:outputText value="Двигател /обем, гориво, тип/: *" />
+                            <p:inputText value="#{carRegistriBean.engineType}" />
+                       
+                            <h:outputText value="Година на производство: *" />
+                            <p:inputText value="#{carRegistriBean.carYearManifacture}"/>
+
+                            
+                            <h:outputLabel value="Гоишен данък:" />
+                            <p:calendar value="#{carRegistriBean.roadTaxisEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Гражданска от говорност:" />
+                            <p:calendar value="#{carRegistriBean.liabilityInsuranseEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Автокаско:" />
+                            <p:calendar value="#{carRegistriBean.fullInsuranseEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+    
+                            <h:outputText value="Годишен технически преглед:" />
+                            <p:calendar value="#{carRegistriBean.anualCheckEndDate}" navigator="true" pattern="dd-MM-yyyy" />
+                            
+                            <h:outputText value="Винетка:" />
+                            <p:calendar  value="#{carRegistriBean.vinnetesEndDate}" navigator="true" pattern="dd-MM-yyyy"  />
+                    </h:panelGrid>
+                       <br /> 
+                                      
+                        <p:commandButton value="Добави"  action="#{carRegistriBean.addCar(userManageBean.currentUser.id)}"
+                          icon="ui-icon-check" ajax="false" /> 
+                   </p:fieldset>
+               </h:form>
+    <!--/CAR REGISTER fORM ####################################################################################### -->  
+			
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

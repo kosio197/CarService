@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -11,32 +12,28 @@
 	<ui:composition template="template/layout.xhtml">
 		<ui:define name="header">
 
-		  <div align="center">
-			<h:form id="loginForm">
-				<h:panelGrid columns="4" cellpadding="1" border="3" >
+		  <div align="center"  style="background-image: url('../images/sky.jpg'); background-size: 45%;" >
+			
+		  <h:panelGrid columns="4" cellpadding="1" border="3" style="background-color: #eff2fc ;" >
 		     <c:choose>
-              <c:when test="#{userBean.hasAutenticated()}">
+              <c:when test="#{not userManageBean.autenticated}">
                       <div style="color: red; font-size: 20; background-position: center;">Грешно потребителско име или парола</div>
               </c:when>
              </c:choose> 
 					<h:panelGrid columns="2" >
 						<h:outputText value="потребителско име" />
-						<p:inputText  value="#{userBean.username}" />
+						<p:inputText  value="#{userManageBean.username}" />
 
 						<h:outputText value="парола"/>
-						<p:password   value="#{userBean.password}" />
+						<p:password   value="#{userManageBean.password}" />
 					</h:panelGrid>
 					<p:commandButton id="saveButton" icon="ui-icon-extlink"
-					               action="#{userBean.login()}" value="Вход" update="@form" ajax="false"/>
+					               action="#{userManageBean.login()}" value="Вход" update="@form" ajax="false"/>
 
                     <p:commandButton value="Регистрация" icon="ui-icon-extlink" ajax="false"
-                                   action="#{userBean.userRegistryPageSendRedirect()}" />
-
-				
-				</h:panelGrid>
-			</h:form>
-
-		   </div>
+                                   action="#{userManageBean.userRegistryPageSendRedirect()}" />				
+		  </h:panelGrid>
+		  </div>
 		</ui:define>
 	</ui:composition>
 </h:body>

@@ -1,22 +1,24 @@
-package bg.garage.bean;
+package bg.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import bg.garage.model.CarModel;
-import bg.garage.servicesImpl.VehicleServiceImpl;
 
-@ManagedBean(name = "carRegistriBean")
-@RequestScoped
+@ManagedBean(name = "carRegistriBean", eager = true)
+@ViewScoped
 public class CarRegistriBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ManagedProperty("#{vehicleServiceImpl}")
-    private VehicleServiceImpl vehicleServiceImpl;
+    @ManagedProperty("#{userManageBean}")
+    private UserManageBean userManageBean;
 
     private Long ownerId;
 
@@ -30,25 +32,51 @@ public class CarRegistriBean implements Serializable {
     private Date lastVisitDate = new Date();
 
     private Date yearManifacture;
+    private String carYearManifacture;
+
     private Date roadTaxisEndDate;
     private Date anualCheckEndDate;
     private Date liabilityInsuranseEndDate;
     private Date fullInsuranseEndDate;
     private Date vinnetesEndDate;
 
-    public void addCar(long ownerId) {
+    public void backToUserView() throws IOException {
+        sendRedirect("/page/currentUserView.html");
+    }
+
+    public String addCar(Long ownerId) throws IOException {
         CarModel carModel = new CarModel(ownerId, registrationPlate, marka, model, vin, engineType, currentMilage,
                 yearManifacture, roadTaxisEndDate, anualCheckEndDate, liabilityInsuranseEndDate, fullInsuranseEndDate,
                 vinnetesEndDate, lastVisitDate);
-        vehicleServiceImpl.addCar(carModel);
+        return userManageBean.addCar(carModel);
+
     }
 
-    public VehicleServiceImpl getVehicleServiceImpl() {
-        return vehicleServiceImpl;
+    public String carLastVisiteDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        return formatter.format(lastVisitDate);
     }
 
-    public void setVehicleServiceImpl(VehicleServiceImpl vehicleServiceImpl) {
-        this.vehicleServiceImpl = vehicleServiceImpl;
+    private void sendRedirect(String path) throws IOException {
+        String relPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(relPath + path);
+    }
+
+    /*
+     * Data Formatter from Car Year Manufacture
+     */
+    public String getCarYearManifacture() {
+        return carYearManifacture;
+    }
+
+    public void setCarYearManifacture(String carYearManifacture) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+        try {
+            this.yearManifacture = formatter.parse(carYearManifacture);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Long getOwnerId() {
@@ -161,6 +189,14 @@ public class CarRegistriBean implements Serializable {
 
     public void setVinnetesEndDate(Date vinnetesEndDate) {
         this.vinnetesEndDate = vinnetesEndDate;
+    }
+
+    public UserManageBean getUserManageBean() {
+        return userManageBean;
+    }
+
+    public void setUserManageBean(UserManageBean userManageBean) {
+        this.userManageBean = userManageBean;
     }
 
 }

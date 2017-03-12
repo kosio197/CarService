@@ -1,9 +1,9 @@
 package bg.garage.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -30,10 +30,10 @@ public class CarModel implements Serializable {
     private Date fullInsuranseEndDate;
     private Date vinnetesEndDate;
 
-    private Set<RepairModel> repairs = new HashSet<>();
+    private List<RepairModel> carRepairs;
 
     public CarModel() {
-
+        this.carRepairs = new ArrayList<>();
     }
 
     public CarModel(Long ownerId, String registrationPlate, String marka, String model, String vin, String engineType,
@@ -59,7 +59,7 @@ public class CarModel implements Serializable {
     public CarModel(Long id, Long ownerId, String registrationPlate, String marka, String model, String vin,
             String engineType, Integer currentMilage, Date yearManifacture, Date roadTaxisEndDate,
             Date anualCheckEndDate, Date liabilityInsuranseEndDate, Date fullInsuranseEndDate, Date vinnetesEndDate,
-            Date lastVisitDate, Set<RepairModel> repairs) {
+            Date lastVisitDate, List<RepairModel> repairs) {
         this();
         this.id = id;
         this.ownerId = ownerId;
@@ -76,11 +76,15 @@ public class CarModel implements Serializable {
         this.fullInsuranseEndDate = fullInsuranseEndDate;
         this.vinnetesEndDate = vinnetesEndDate;
         this.lastVisitDate = lastVisitDate;
-        this.repairs = repairs;
+        this.carRepairs = repairs;
     }
 
     public void addRepair(RepairModel repair) {
-        this.repairs.add(repair);
+        this.carRepairs.add(repair);
+    }
+
+    public void deleteRepairs(RepairModel repair) {
+        carRepairs.remove(repair);
     }
 
     public Long getId() {
@@ -195,12 +199,12 @@ public class CarModel implements Serializable {
         this.vinnetesEndDate = vinnetesEndDate;
     }
 
-    public Set<RepairModel> getRepairs() {
-        return repairs;
+    public List<RepairModel> getCarRepairs() {
+        return carRepairs;
     }
 
-    public void setRepairs(Set<RepairModel> repairs) {
-        this.repairs = repairs;
+    public void setCarRepairs(List<RepairModel> carRepairs) {
+        this.carRepairs = carRepairs;
     }
 
     public Date getLastVisitDate() {
@@ -209,6 +213,19 @@ public class CarModel implements Serializable {
 
     public void setLastVisitDate(Date lastVisitDate) {
         this.lastVisitDate = lastVisitDate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CarModel) {
+            return ((CarModel) obj).getId() == this.id;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.marka + " " + this.model + " " + this.registrationPlate;
     }
 
 }

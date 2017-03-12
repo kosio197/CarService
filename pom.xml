@@ -114,13 +114,26 @@
 		    <version>4.3.6.RELEASE</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>4.3.6.RELEASE</version>
+		</dependency>
+ <!--#################################################################################################### Java Mail -->
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.5.0-b01</version>
+		</dependency>
+ <!--######################################################################################### apache Tomcat el-api -->		
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>el-api</artifactId>
 		    <version>6.0.32</version>
 		    <type>jar</type>
-		</dependency>
-		
+		</dependency>		
  <!--#################################################################################################### Hibernate -->
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
