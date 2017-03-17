@@ -19,8 +19,7 @@
          
          <h:form >   
            <p:dataTable  var="user" value="#{adminPanelUserManageBean.allUsers}" widgetVar="usersTable" 
-                 emptyMessage="No userrs found with given criteria" filteredValue="#{adminPanelUserManageBean.filteredUsers}" 
-                 editable="true" editMode="cell" >
+                 emptyMessage="No userrs found with given criteria" editable="true" editMode="cell" >
 
                <f:facet name="header">
                     <p:outputPanel>
@@ -31,43 +30,43 @@
                 
                <p:separator></p:separator>
          
-               <p:column headerText="Username">
+               <p:column headerText="Username" filterBy="#{user.username}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.username}" /></f:facet>
                        <f:facet name="input"><p:inputText id="modelInput" value="#{user.username}" /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Password">
+               <p:column headerText="Password" filterBy="#{user.password}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.password}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{user.password}" /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="First Name">
+               <p:column headerText="First Name" filterBy="#{user.firstName}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.firstName}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{user.firstName}" /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Last Name">
+               <p:column headerText="Last Name" filterBy="#{user.lastName}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.lastName}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{user.lastName}"  /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Email">
+               <p:column headerText="Email" filterBy="#{user.email}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.email}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{user.email}" > </p:calendar></f:facet>
+                       <f:facet name="input"><p:inputText  value="#{user.email}" /> </f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Telephone">
+               <p:column headerText="Telephone" filterBy="#{user.telephone}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.telephone}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{user.telephone}" /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="ROLE">
+               <p:column headerText="ROLE" filterBy="#{user.role}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.role}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{user.role}" /></f:facet>
@@ -75,59 +74,31 @@
                </p:column>
                
               <!--   -->
-               <p:column headerText="Last Visit">
+               <p:column headerText="Last Visit" filterBy="#{user.lastVisit}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{user.lastVisit}" /></f:facet>
                        <f:facet name="input"><p:calendar value="#{user.lastVisit}"> </p:calendar></f:facet>
                    </p:cellEditor>
                </p:column>  
-               <p:column headerText="Anual Check">
+               <p:column headerText="Days to Event" filterBy="#{user.daysToEvent}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
-                       <f:facet name="output"><h:outputText value="#{car.anualCheckEndDate}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{car.anualCheckEndDate}"> </p:calendar></f:facet>
+                       <f:facet name="output"><h:outputText value="#{user.daysToEvent}" /></f:facet>
+                       <f:facet name="input"><p:inputNumber value="#{user.daysToEvent}"></p:inputNumber> </f:facet>
                    </p:cellEditor>
-               </p:column> 
-               <p:column headerText="Liability Insuranse">
-                   <p:cellEditor>
-                       <f:facet name="output"><h:outputText value="#{car.liabilityInsuranseEndDate}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{car.liabilityInsuranseEndDate}"> </p:calendar></f:facet>
-                   </p:cellEditor>
-               </p:column> 
-               <p:column headerText="Full Insuranse">
-                   <p:cellEditor>
-                       <f:facet name="output"><h:outputText value="#{car.fullInsuranseEndDate}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{car.fullInsuranseEndDate}"> </p:calendar></f:facet>
-                   </p:cellEditor>
-               </p:column>
-               <p:column headerText="Vinnetes">
-                   <p:cellEditor>
-                       <f:facet name="output"><h:outputText value="#{car.vinnetesEndDate}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{car.vinnetesEndDate}" > </p:calendar></f:facet>
-                   </p:cellEditor>
-               </p:column> 
-               <p:column headerText="Last Visit">
-                   <p:cellEditor>
-                       <f:facet name="output"><h:outputText value="#{car.lastVisitDate}" /></f:facet>
-                       <f:facet name="input"><p:calendar value="#{car.lastVisitDate}" > </p:calendar></f:facet>
-                   </p:cellEditor>
-               </p:column>
-               <p:column headerText="Owner">
-                      <h:outputText value="#{adminPanelCarsManageBean.getOwnerName(car.ownerId)}" />
                </p:column> 
 
-
-               Manage And Navigation 
-               <p:column headerText="Car Repairs">
-                 <p:commandButton  value="View" action="#{carManageBean.carInfoAndManage(car)}" ajax="false"/>
+               <!-- Manage And Navigation  -->
+               <p:column headerText="User Cars">
+                 <p:commandButton  value="View" action="#{adminPanelUserManageBean.manageCars(user)}" ajax="false"/>
                </p:column>
                <p:column headerText="Save Change">
-                 <p:commandButton  value="Save" action="#{adminPanelCarsManageBean.editCar(car)}" ajax="false"/>
+                 <p:commandButton  value="Save" action="#{adminPanelUserManageBean.editUser(user)}" ajax="false"/>
                </p:column>
                
                <p:column headerText="*" style="width:20px" > *** </p:column>
                
-               <p:column headerText="Delete Car">
-                 <p:commandButton  value="Delete" action="#{adminPanelCarsManageBean.deleteCar(car)}" ajax="false"/>
+               <p:column headerText="Delete User">
+                 <p:commandButton  value="Delete" action="#{adminPanelUserManageBean.deleteUser(user)}" ajax="false"/>
                </p:column>
 
            </p:dataTable>

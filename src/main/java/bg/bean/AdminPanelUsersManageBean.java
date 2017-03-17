@@ -1,12 +1,14 @@
 package bg.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import bg.garage.model.CarModel;
 import bg.garage.model.UserModel;
@@ -15,7 +17,7 @@ import bg.garage.servicesImpl.UserServiceImpl;
 import bg.garage.servicesImpl.VehicleServiceImpl;
 
 @ManagedBean(name = "adminPanelUserManageBean")
-@ViewScoped
+@SessionScoped
 public class AdminPanelUsersManageBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,14 +33,43 @@ public class AdminPanelUsersManageBean implements Serializable {
     @ManagedProperty("#{layoutManageBean}")
     private LayoutManageBean layoutManageBeab;
 
+    @ManagedProperty("#{adminPanelCarsManageBean}")
+    private AdminPanelCarsManageBean adminPanelCarsManageBean;
+
     private List<UserModel> allUsers;
-    private List<UserModel> filteredUsers;
     private List<CarModel> userCars;
 
     @PostConstruct
     public void init() {
         setAllUsers(userService.getAllUsers());
         layoutManageBeab.setAdminView();
+    }
+
+    public void editUser(UserModel userModel) {
+        userService.addUser(userModel);
+    }
+
+    public void deleteUser(UserModel userModel) {
+        userService.deleteUser(userModel.getId());
+    }
+
+    /*
+     * Navigation
+     */
+
+    public void manageCars(UserModel userModel) throws IOException {
+        adminPanelCarsManageBean.setAllCars(vehicleServiceImpl.getUserCars(userModel.getId()));
+        sendRedirect("/page/adminAllCarsView.html");
+    }
+
+    public void adminAllCarsPageSendRedirect() throws IOException {
+        adminPanelCarsManageBean.setAllCars(vehicleServiceImpl.getAllCars());
+        sendRedirect("/page/adminAllCarsView.html");
+    }
+
+    private void sendRedirect(String path) throws IOException {
+        String relPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(relPath + path);
     }
 
     /*
@@ -92,12 +123,12 @@ public class AdminPanelUsersManageBean implements Serializable {
         this.userCars = userCars;
     }
 
-    public List<UserModel> getFilteredUsers() {
-        return filteredUsers;
+    public AdminPanelCarsManageBean getAdminPanelCarsManageBean() {
+        return adminPanelCarsManageBean;
     }
 
-    public void setFilteredUsers(List<UserModel> filteredUsers) {
-        this.filteredUsers = filteredUsers;
+    public void setAdminPanelCarsManageBean(AdminPanelCarsManageBean adminPanelCarsManageBean) {
+        this.adminPanelCarsManageBean = adminPanelCarsManageBean;
     }
 
 }

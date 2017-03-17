@@ -59,7 +59,7 @@ public class UserManageBean implements Serializable {
             setRefreshed(true);
 
             layoutManageBeab.setCurrentUserPageLayout();
-            sendRedirect("/page/currentUserView.html");
+            currentUserViewPageSendRedirect();
         } else {
             setAutenticated(false);
         }
@@ -134,6 +134,10 @@ public class UserManageBean implements Serializable {
      * Navigation
      */
 
+    public void currentUserViewPageSendRedirect() throws IOException {
+        sendRedirect("/page/currentUserView.html");
+    }
+
     public void userRegistryPageSendRedirect() throws IOException {
         sendRedirect("/page/userRegistry.html");
     }
@@ -141,6 +145,14 @@ public class UserManageBean implements Serializable {
     public void carRegistryPageSendRedirect() throws IOException {
         setRefreshed(false);
         sendRedirect("/page/carRegistry.html");
+    }
+
+    public void adminAllRepairsPageSendRedirect() throws IOException {
+        sendRedirect("/page/adminAllRepairsView.html");
+    }
+
+    public void adminAllUsersPageSendRedirect() throws IOException {
+        sendRedirect("/page/adminAllUsersView.html");
     }
 
     private void sendRedirect(String path) throws IOException {
@@ -220,7 +232,7 @@ public class UserManageBean implements Serializable {
     }
 
     public boolean isHasRoleAdmin() {
-        return hasRoleAdmin;
+        return currentUser == null ? false : hasRoleAdmin;
     }
 
     public void setHasRoleAdmin(boolean hasRoleAdmin) {

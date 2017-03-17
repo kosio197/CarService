@@ -12,22 +12,22 @@
 	<ui:composition>
         <div align="right"  style="background-image: url('../images/sky.jpg'); background-size: 45%;" >
 	        <h:panelGrid columns="5" cellpadding="1" border="2"> 
-	           <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Users"  action="/page/adminAllUsersView.html" 
+	           <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Users"  action="#{userManageBean.adminAllUsersPageSendRedirect()}" 
                                         icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px" />
                 
-                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Cars"   action="/page/adminAllCarsView.html" 
+                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Cars"   action="#{adminPanelUserManageBean.adminAllCarsPageSendRedirect()}" 
                                         icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px"/>
                 
-                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Repairs"   action="/page/adminAllRepairsView.html" 
+                <p:commandButton rendered="#{userManageBean.hasRoleAdmin}" value="All Repairs"   action="#{userManageBean.adminAllRepairsPageSendRedirect()}" 
                                         icon="ui-icon-extlink" ajax="false" style="width:120px;height:25px; font-size:13px"/>
                 
-                <p:commandButton  rendered="#{userManageBean.autenticated}" value="Back" action="/page/currentUserView.html" 
+                <p:commandButton  rendered="#{not empty userManageBean.currentUser}" value="Home" action="#{userManageBean.currentUserViewPageSendRedirect()}" 
                                  icon="ui-icon-extlink" style="width:120px;height:25px; font-size:13px"/>
             
             </h:panelGrid> 
 	        <h:panelGrid columns="5" cellpadding="1" border="2">
 
-                <p:commandButton  rendered="#{userManageBean.autenticated}" value="Logout" action="#{userManageBean.logout()}" 
+                <p:commandButton  rendered="#{not empty userManageBean.currentUser}" value="Изход" action="#{userManageBean.logout()}" 
                                  icon="ui-icon-extlink" style="width:120px;height:25px; font-size:13px"/>
             </h:panelGrid> 
         </div>

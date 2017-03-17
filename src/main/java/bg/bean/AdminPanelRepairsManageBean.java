@@ -78,7 +78,7 @@ public class AdminPanelRepairsManageBean implements Serializable {
     }
 
     /*
-     * ############### GETARS AND SETARS ####################
+     * ############### GETTARS AND SETTARS ####################
      */
 
     public VehicleServiceImpl getVehicleServiceImpl() {

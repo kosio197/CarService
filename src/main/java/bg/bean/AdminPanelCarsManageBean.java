@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import bg.garage.model.CarModel;
 import bg.garage.model.RepairModel;
@@ -15,7 +15,7 @@ import bg.garage.servicesImpl.UserServiceImpl;
 import bg.garage.servicesImpl.VehicleServiceImpl;
 
 @ManagedBean(name = "adminPanelCarsManageBean")
-@ViewScoped
+@SessionScoped
 public class AdminPanelCarsManageBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,6 @@ public class AdminPanelCarsManageBean implements Serializable {
     @ManagedProperty("#{layoutManageBean}")
     private LayoutManageBean layoutManageBean;
 
-    private List<CarModel> filteredCars;
     private List<CarModel> allCars;
     private List<RepairModel> currentCarRepairs;
 
@@ -90,14 +89,6 @@ public class AdminPanelCarsManageBean implements Serializable {
 
     public void setLayoutManageBean(LayoutManageBean layoutManageBean) {
         this.layoutManageBean = layoutManageBean;
-    }
-
-    public List<CarModel> getFilteredCars() {
-        return filteredCars;
-    }
-
-    public void setFilteredCars(List<CarModel> filteredCars) {
-        this.filteredCars = filteredCars;
     }
 
     public List<CarModel> getAllCars() {

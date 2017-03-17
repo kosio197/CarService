@@ -18,8 +18,7 @@
          
 		 <h:form >   
 		   <p:dataTable  var="car" value="#{adminPanelCarsManageBean.allCars}" widgetVar="carsTable" 
-                 emptyMessage="No cars found with given criteria"  
-                 editable="true" editMode="cell" >
+                 emptyMessage="No cars found with given criteria"  editable="true" editMode="cell" >
 
 		       <f:facet name="header">
 		            <p:outputPanel>
@@ -30,43 +29,44 @@
 		        
 		       <p:separator></p:separator>
 		 
-		       <p:column headerText="Model">
+		 
+		       <p:column headerText="Model" filterBy="#{car.model}" filterMatchMode="contains" filterStyle="display:none">
 		           <p:cellEditor>
 		               <f:facet name="output"><h:outputText value="#{car.model}" /></f:facet>
 		               <f:facet name="input"><p:inputText id="modelInput" value="#{car.model}" style="width:100%"/></f:facet>
 		           </p:cellEditor>
 		       </p:column>
-		       <p:column headerText="Marka">
+		       <p:column headerText="Marka" filterBy="#{car.marka}" filterMatchMode="contains" filterStyle="display:none">
 		           <p:cellEditor>
 		               <f:facet name="output"><h:outputText value="#{car.marka}" /></f:facet>
 		               <f:facet name="input"><p:inputText value="#{car.marka}" style="width:100%" /></f:facet>
 		           </p:cellEditor>
-		       </p:column>
-		       <p:column headerText="Engine Type">
+		       </p:column> 
+		       <p:column headerText="Engine Type" filterBy="#{car.engineType}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{car.engineType}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{car.engineType}" style="width:100%"/></f:facet>
                    </p:cellEditor>
                </p:column>
-		       <p:column headerText="Registration Plate">
+		       <p:column headerText="Registration Plate" filterBy="#{car.registrationPlate}" filterMatchMode="contains" filterStyle="display:none">
 		           <p:cellEditor>
 		               <f:facet name="output"><h:outputText value="#{car.registrationPlate}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{car.registrationPlate}" style="width:100%" /></f:facet>
 		           </p:cellEditor>
 		       </p:column>
-               <p:column headerText="Manifacture Year">
+               <p:column headerText="Manifacture Year" filterBy="#{car.yearManifacture}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{car.yearManifacture}" /></f:facet>
                        <f:facet name="input"><p:calendar value="#{car.yearManifacture}" style="width:100%"> </p:calendar></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Milage">
+               <p:column headerText="Milage" filterBy="#{car.currentMilage}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{car.currentMilage}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{car.currentMilage}" style="width:100%" /></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="VIN">
+               <p:column headerText="VIN" filterBy="#{car.vin}" filterMatchMode="contains" filterStyle="display:none">
                    <p:cellEditor>
                        <f:facet name="output"><h:outputText value="#{car.vin}" /></f:facet>
                        <f:facet name="input"><p:inputText value="#{car.vin}" style="width:100%" /></f:facet>
@@ -110,7 +110,7 @@
                        <f:facet name="input"><p:calendar value="#{car.lastVisitDate}" > </p:calendar></f:facet>
                    </p:cellEditor>
                </p:column>
-               <p:column headerText="Owner">
+               <p:column headerText="Owner" filterBy="#{adminPanelCarsManageBean.getOwnerName(car.ownerId)}" filterMatchMode="contains" filterStyle="display:none">
                       <h:outputText value="#{adminPanelCarsManageBean.getOwnerName(car.ownerId)}" />
                </p:column> 
 
