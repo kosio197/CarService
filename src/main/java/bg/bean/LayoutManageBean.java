@@ -22,7 +22,7 @@ public class LayoutManageBean implements Serializable {
         this.nordSize = 90;
         this.westSize = 350;
         this.westHeader = "Профилактика и Ремонти по Автомобила";
-        this.eastSize = 400;
+        this.eastSize = 340;
         this.eastHeader = "Добави Автомобил";
         this.southSize = 150;
         this.southHeader = "Основни индикаций използвани в повечето автомобилни табла:";

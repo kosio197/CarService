@@ -1,5 +1,6 @@
 package bg.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import bg.garage.model.CarModel;
 import bg.garage.model.RepairModel;
@@ -52,8 +54,15 @@ public class AdminPanelCarsManageBean implements Serializable {
         this.vehicleServiceImpl.addCar(car);
     }
 
-    public void deleteCar(CarModel car) {
+    public void deleteCar(CarModel car) throws IOException {
         this.vehicleServiceImpl.deleteCar(car.getId());
+        this.allCars.remove(car);
+        sendRedirect("/page/adminAllCarsView.html");
+    }
+
+    private void sendRedirect(String path) throws IOException {
+        String relPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(relPath + path);
     }
 
     /*
