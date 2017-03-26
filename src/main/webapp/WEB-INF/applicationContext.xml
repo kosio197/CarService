@@ -58,11 +58,5 @@
             </props>
         </property>
     </bean>
-	    
-    <!--  	<task:scheduler id="userNotificationScheduler" />
-	
-	<task:scheduled-tasks scheduler="userNotificationScheduler">
-	        <task:scheduled ref="notificationService" method="sendNotification" cron="1 * * * *" />
-	</task:scheduled-tasks> -->
 
 </beans>

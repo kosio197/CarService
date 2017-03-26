@@ -39,6 +39,10 @@
 		</repository>
 	</repositories>
 
+<!-- *********************
+    Dependencies
+************************** -->
+
 	<dependencies>
  <!--####################################################################################### MySQL driver connector -->
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -60,19 +64,6 @@
 		    <artifactId>all-themes</artifactId>
 		    <version>1.0.10</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.primefaces.extensions/primefaces-extensions
-		<dependency>
-		    <groupId>org.primefaces.extensions</groupId>
-		    <artifactId>primefaces-extensions</artifactId>
-		    <version>6.0.0</version>
-		</dependency>  -->
-		
-		<!-- https://mvnrepository.com/artifact/javax.faces/javax.faces-api
-		<dependency>
-		    <groupId>javax.faces</groupId>
-		    <artifactId>javax.faces-api</artifactId>
-		    <version>2.3-edr1</version>
-		</dependency>  -->
 		
  <!--###################################################################################################### Servlet -->		
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -80,7 +71,9 @@
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>javax.servlet-api</artifactId>
 		    <version>4.0.0-b01</version>
-		</dependency>		
+		</dependency>
+
+				
  <!--###################################################################################################### Mojara  -->		
 		<!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api -->
 		<dependency>
@@ -120,6 +113,15 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>4.3.6.RELEASE</version>
 		</dependency>
+ 
+ <!--#################################################################################################### Jackson  -->		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.9.0.pr1</version>
+		</dependency>		
+		
  <!--#################################################################################################### Java Mail -->
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
